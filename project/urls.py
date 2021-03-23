@@ -19,11 +19,6 @@ from django.views.generic import TemplateView
 from django.contrib.auth.views import LogoutView, LoginView
 
 urlpatterns = [
-    path('', TemplateView.as_view(template_name="app/index.html")),
+    path('', include('exercising.urls')),
     path('admin/', admin.site.urls),
-    path('accounts/', include('allauth.urls')),
-    path('login/', LoginView.as_view(), name='login'),
-    path('logout/', LogoutView.as_view(template_name='app/index.html'), name='logout'),
 ]
-
-
