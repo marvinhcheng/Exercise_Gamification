@@ -1,10 +1,8 @@
 <!doctype html>
-{% load socialaccount %}
 <html>
   <head>
   
 	<!-- Required meta tags -->
-    <title>Google Registration</title>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -37,13 +35,7 @@
 			</div>
 	</nav>
   
-    <h1>My Project</h1>
-    {% if user.is_authenticated %}
-    <p>Welcome, {{ user.username }} !</p>
-
-    {% else %}
-    <a href="{% provider_login_url 'google' %}">Login with Google</a>
-    {% endif %}
+	<p>LOGS</p>
 	
 	<!--FOOTER-->
 	<footer class="bg-light text-center text-lg-start">
