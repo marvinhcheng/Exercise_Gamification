@@ -4,6 +4,7 @@ from django.urls import reverse
 from django.views import generic
 from django.utils import timezone
 from .models import User
+from django.views.generic import TemplateView
 
 class GoalsListView(generic.ListView):
     model = User
@@ -12,3 +13,6 @@ class GoalsListView(generic.ListView):
 class LogsListView(generic.ListView):
     model = User
     template_name = 'exercising/logs.html'
+
+# class Index(TemplateView):
+#     template_name = 'exercising/index.html'
