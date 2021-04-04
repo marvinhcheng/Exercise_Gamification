@@ -106,7 +106,7 @@ if 'test' in sys.argv:
 
 if '/app' in os.environ['HOME']:
     import django_heroku
-    django_heroku.settings(locals())
+    django_heroku.settings(locals(), test_runner=False)
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
