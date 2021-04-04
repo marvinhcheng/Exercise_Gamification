@@ -104,9 +104,9 @@ if 'test' in sys.argv:
           'TEST_NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 
-if '/app' in os.environ['HOME']:
-    import django_heroku
-    django_heroku.settings(locals(), test_runner=False)
+# if '/app' in os.environ['HOME']:
+import django_heroku
+django_heroku.settings(locals(), test_runner=False)
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
@@ -180,9 +180,9 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 # Activate Django-Heroku.
-try:
+'''try:
     # Configure Django App for Heroku.
     import django_heroku
     django_heroku.settings(locals())
 except ImportError:
-    found = False
+    found = False'''
