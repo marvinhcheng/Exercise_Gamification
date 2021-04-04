@@ -104,7 +104,7 @@ if 'test' in sys.argv:
           'TEST_NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 
-if 'HEROKU' in os.environ:
+if '/app' in os.environ['HOME']:
     import django_heroku
     django_heroku.settings(locals())
 
