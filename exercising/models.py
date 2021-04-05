@@ -23,9 +23,16 @@ class Exercise_Log(models.Model):
     def __str__(self):
         return str(self.date)
 
+class Goal_Log(models.Model):
+    exercise_type = models.CharField(max_length = 50, default = "")
+    duration = models.DecimalField(max_digits = 4, decimal_places = 2, default=0.0)
+    def __str__(self):
+        return str(self.exercise_type)
+
 class Profile(models.Model):
     profile = models.OneToOneField(User, on_delete = models.CASCADE, primary_key = True)
     logs = models.ManyToManyField(Exercise_Log, blank=True)
+    goals = models.ManyToManyField(Goal_Log, blank=True)
 
     def __str__(self):
         return self.profile.username
