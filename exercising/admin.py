@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Profile, Exercise_Log
+from .models import Profile, Exercise_Log, Goal_Log
 from django.contrib.auth.admin import UserAdmin
 
 
@@ -7,3 +7,4 @@ from django.contrib.auth.admin import UserAdmin
 
 admin.site.register(Profile)
 admin.site.register(Exercise_Log)
+admin.site.register(Goal_Log)
