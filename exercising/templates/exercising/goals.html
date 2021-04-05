@@ -39,12 +39,12 @@
 			</div>
 	</nav>
   
-	<h2>Goals</h2>
+    <h2>Goals Logs</h2>
     <div>
-      <h4>Enter your weight goal</h4>
+      <h4>Enter your goal</h4>
       <form action="/goals/" method="post">
         <div>
-          <div class="form-group">{% csrf_token %} {{ form2 }}</div>
+          <div class="form-group">{% csrf_token %} {{ form }}</div>
           <div class="button">
             <!-- <input type="submit" value="Submit" /> -->
             <button type="submit" class="btn btn-primary">Submit</button>
@@ -53,8 +53,14 @@
       </form>
     </div>
     <div>
-      <h4>Your weight goal</h4>
-
+      <h4>Log of your goals</h4>
+      <ul>
+        {% for item in user.profile.goals.all %}
+        <li>
+          Your progress of {{ item }}: 0/{{ item.duration }} hours
+        </li>
+        {% endfor %}
+      </ul>
       <!-- <h4>Log of your exercises</h4>
       {% if logs_list %}
       <ul>

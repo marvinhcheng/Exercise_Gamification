@@ -24,21 +24,10 @@ class Exercise_Log(models.Model):
         return str(self.date)
 
 class Goal_Log(models.Model):
-    current_weight = models.DecimalField(max_digits = 4, decimal_places = 2, default = 0.0)
-    current_date = models.DateField(default=datetime.date.today)
-
-    future_weight = models.DecimalField(max_digits = 4, decimal_places = 2, default = 0.0)
-    future_date = models.DateField()
-
-    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank = True )
-
     exercise_type = models.CharField(max_length = 50, default = "")
     duration = models.DecimalField(max_digits = 4, decimal_places = 2, default=0.0)
-    date = models.DateField(default=datetime.date.today)
-
-    #Work on this
     def __str__(self):
-        return str(self.current_date)
+        return str(self.exercise_type)
 
 class Profile(models.Model):
     profile = models.OneToOneField(User, on_delete = models.CASCADE, primary_key = True)
