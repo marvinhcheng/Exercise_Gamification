@@ -7,7 +7,11 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
 	<!-- Bootstrap CSS -->
-	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" 
+		rel="stylesheet" 
+		integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" 
+		crossorigin="anonymous"
+	/>
   </head>
   <body>
   		<!--
@@ -35,7 +39,36 @@
 			</div>
 	</nav>
   
-	<p>GOALS</p>
+	<h2>Goals</h2>
+    <div>
+      <h4>Enter your weight goal</h4>
+      <form action="/goals/" method="post">
+        <div>
+          <div class="form-group">{% csrf_token %} {{ form2 }}</div>
+          <div class="button">
+            <!-- <input type="submit" value="Submit" /> -->
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div>
+      <h4>Your weight goal</h4>
+
+      <!-- <h4>Log of your exercises</h4>
+      {% if logs_list %}
+      <ul>
+        {% for item in logs_list %}
+        <li>
+          On {{ item }} you did {{item.exercise_type}} for {{ item.duration }}
+          hours
+        </li>
+        {% endfor %}
+      </ul>
+      {% else %}
+      <p>No logs available</p>
+      {% endif %} -->
+    </div>
 	
 	<!--FOOTER-->
 	<footer class="bg-light text-center text-lg-start">
