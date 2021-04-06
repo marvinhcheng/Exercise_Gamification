@@ -52,42 +52,17 @@
       </div>
     </nav>
 
-    <h2>Exercise Logs</h2>
+    <h2>Groups</h2>
     <div>
-      <h4>Enter your exercise</h4>
-      <form action="/logs/" method="post">
-        <div>
-          <div class="form-group">{% csrf_token %} {{ form }}</div>
-          <div class="button">
-            <!-- <input type="submit" value="Submit" /> -->
-            <button type="submit" class="btn btn-primary">Submit</button>
-          </div>
-        </div>
-      </form>
-    </div>
-    <div>
-      <h4>Log of your exercises</h4>
-      <ul>
-        {% for item in user.profile.logs.all %}
-        <li>
-          On {{ item }} you did {{item.exercise_type}} for {{ item.duration }}
-          hours
-        </li>
-        {% endfor %}
-      </ul>
-      <!-- <h4>Log of your exercises</h4>
-      {% if logs_list %}
-      <ul>
-        {% for item in logs_list %}
-        <li>
-          On {{ item }} you did {{item.exercise_type}} for {{ item.duration }}
-          hours
-        </li>
-        {% endfor %}
-      </ul>
-      {% else %}
-      <p>No logs available</p>
-      {% endif %} -->
+      <h4>Public Groups</h4>
+      <!-- {% for group in group_list %}
+      <li>{{ group }}</li>
+      {% endfor %}  -->
+      {% for group in group_list %}
+      <li>
+        <a href="{{ group.id }}">{{ group }}</a>
+      </li>
+      {% endfor %}
     </div>
 
     <!--FOOTER-->

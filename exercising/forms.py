@@ -1,4 +1,6 @@
 from django import forms
+from .models import Group
+
 
 class ExerciseForm(forms.Form):
     exercises = (
@@ -26,3 +28,13 @@ class GoalsForm(forms.Form):
     )
     exercise_type = forms.MultipleChoiceField(choices = exercises, label ="Exercise Type")
     duration = forms.DecimalField(label = "Duration (in hours)")
+
+
+class GroupForm(forms.ModelForm):
+    # fields= "__all__"
+    # exclude = ['email']
+
+    class Meta:
+        model = Group
+        fields= ['name', 'description']
+

@@ -1,10 +1,12 @@
-from django.http import HttpResponseRedirect
-from django.shortcuts import get_object_or_404, render
+
+from django.http import HttpResponse, HttpResponseRedirect, Http404
+from django.template import loader, RequestContext
+from django.shortcuts import get_object_or_404, render, redirect
 from django.urls import reverse
 from django.views import generic
 from django.utils import timezone
-from .models import User, Exercise_Log, Profile, Goal_Log
-from .forms import ExerciseForm, GoalsForm
+from .models import User, Exercise_Log, Profile, Goal_Log, Group, Message
+from .forms import ExerciseForm, GoalsForm, GroupForm
 from django.views.generic import TemplateView
 
 class GoalsListView(generic.ListView):
@@ -52,3 +54,47 @@ def add_goal(request):
     else:
         form2 = GoalsForm()
     return render(request, 'exercising/goals.html', {'form': form2})
+
+
+class CreateGroup(TemplateView):
+    template_name = 'exercising/makegroup.html'
+    def post(self, request):
+        group_form = GroupForm(request.POST)
+        if group_form.is_valid():
+            group = group_form.save(commit=False)
+            group.owner = request.user
+            group.pub_date = timezone.localtime()
+            group.email = request.user.email
+            group.save()
+        context = {'group_form': group_form}
+        return redirect('/groups/')
+    
+    def get(self, request):
+        group_form = GroupForm()
+        return render(request, self.template_name, {'group_form': group_form})
+
+class GroupListView(generic.ListView):
+    model = Group
+    template_name = 'exercising/grouplist.html'
+    def get_queryset(self):
+        return Group.objects.all()
+    
+
+
+# def group_detail(request, pk):
+#     # template_name = 'exercising/details.html'
+#     # group = Group.objects.get(id=owner_id)
+#     # return render(request, template_name)
+
+#     return render(request, 'detail.html',{
+#         'group' : get_object_or_404(Group, pk=id)
+#     })
+
+
+class group_detail(generic.DetailView):
+    model = Group
+    template_name = 'exercising/details.html'
+
+    
+
+            
