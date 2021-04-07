@@ -4,4 +4,29 @@
 <p>Date created: {{ group.pub_date }}</p>
 <p>Description: {{ group.description }}</p>
 
-<div></div>
+<div>{% for member in group.members.all %} {{ member }} {% endfor %}</div>
+<div>{{ group.members.all }}</div>
+
+<div>{% if request.user == group.owner %} You are the owner {% endif %}</div>
+
+<form method="post" action="{{group.id}}/join/">
+  {% csrf_token %} {% if request.user in group.members.all and request.user != group.owner %}
+  <button
+    type="submit"
+    class="btn btn-primary"
+    value="join group"
+    style="height: 50px; width: 100px"
+  >
+    Leave Group
+  </button>
+  {% endif %} {% if request.user not in group.members.all %}
+  <button
+    type="submit"
+    class="btn btn-primary"
+    value="join group"
+    style="height: 50px; width: 100px"
+  >
+    Join Group
+  </button>
+  {% endif %} {% if request.user != group.owner %} Not owner {% endif %}
+</form>

@@ -30,6 +30,8 @@ class Group(models.Model):
     members = models.ManyToManyField(User, related_name="members")
     owner = models.ForeignKey(User, related_name="owner", on_delete = models.CASCADE)
     email = models.EmailField(max_length=200, null=True)
+    private = models.BooleanField(default = False, null=False)
+
 
     def __str__(self):
         return self.name

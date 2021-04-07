@@ -75,25 +75,33 @@ class CreateGroup(TemplateView):
 
 class GroupListView(generic.ListView):
     model = Group
-    template_name = 'exercising/grouplist.html'
+    template_name = 'exercising/group.html'
     def get_queryset(self):
         return Group.objects.all()
-    
-
-
-# def group_detail(request, pk):
-#     # template_name = 'exercising/details.html'
-#     # group = Group.objects.get(id=owner_id)
-#     # return render(request, template_name)
-
-#     return render(request, 'detail.html',{
-#         'group' : get_object_or_404(Group, pk=id)
-#     })
 
 
 class group_detail(generic.DetailView):
     model = Group
     template_name = 'exercising/details.html'
+
+def join_group(request, pk):
+    user = request.user
+    group = Group.objects.filter(id=pk).first()
+
+    already_member = False
+
+    for member in group.members.all():
+        if (user == member):
+            already_member = True
+    if (not already_member):
+        group.members.add(user)
+    else:
+        group.members.remove(user)
+        return redirect('/groups/')
+
+    return redirect('/groups/'+str(pk))
+
+
 
     
 
