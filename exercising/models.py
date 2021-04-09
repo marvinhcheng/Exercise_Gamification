@@ -23,6 +23,17 @@ class Goal_Log(models.Model):
     def __str__(self):
         return str(self.exercise_type)
 
+# class Message(models.Model):
+#     description = models.TextField()
+#     pub_date = models.DateTimeField(auto_now_add=True)
+#     author = models.CharField(max_length=200, null=False, default="no author")
+
+#     class Meta:
+#         ordering = ['pub_date']
+
+#     def __str__(self):
+#         return 'Comment {} by {}'.format(self.description, self.author)
+
 class Group(models.Model):
     name = models.CharField(max_length=200, null=True)
     description = models.CharField(max_length=200, null=True)
@@ -31,6 +42,7 @@ class Group(models.Model):
     owner = models.ForeignKey(User, related_name="owner", on_delete = models.CASCADE)
     email = models.EmailField(max_length=200, null=True)
     private = models.BooleanField(default = False, null=False)
+    # messages = models.ManyToManyField(Message, blank=True)
 
 
     def __str__(self):
@@ -39,8 +51,7 @@ class Group(models.Model):
         return reverse('group_detail', args=[str(self.id)])
     
 class Message(models.Model):
-    post = models.ForeignKey(Group, on_delete=models.CASCADE, related_name='comments')
-    name = models.CharField(max_length=100)
+    message = models.ForeignKey(Group, on_delete=models.CASCADE, related_name='messages')
     description = models.TextField()
     pub_date = models.DateTimeField(auto_now_add=True)
     author = models.CharField(max_length=200, null=False, default="no author")
@@ -61,6 +72,7 @@ class Profile(models.Model):
 
     def __str__(self):
         return self.profile.username
+
 
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):

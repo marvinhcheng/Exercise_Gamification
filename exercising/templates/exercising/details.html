@@ -1,3 +1,6 @@
+
+
+
 <h2>{{ group }}</h2>
 <p>Owner of group: {{ group.owner }}</p>
 <p>Owner email: {{ group.email }}</p>
@@ -30,3 +33,28 @@
   </button>
   {% endif %} {% if request.user != group.owner %} Not owner {% endif %}
 </form>
+
+<div>
+  <form method="post">
+    {% csrf_token %}
+    <div class = "form-group">
+      <textarea name="description"></textarea>
+    </div>
+    <input type="submit" class="btn btn-primary btn-sm" value="Send Message" margin-top="15px">
+  </form>
+
+  
+  {% if messages %}
+  <h4> Messages: </h4>
+  {% for message in messages %}
+  <div class="media-body">
+    <h5 class="mt-0">{{ message.author }}</h5>
+    <p>{{ message.description }}</p>
+  </div>
+  {% endfor %}
+  {% endif %}
+
+
+</div>
+
+

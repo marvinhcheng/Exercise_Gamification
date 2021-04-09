@@ -1,5 +1,5 @@
 from django import forms
-from .models import Group
+from .models import Group, Message
 
 
 class ExerciseForm(forms.Form):
@@ -31,10 +31,12 @@ class GoalsForm(forms.Form):
 
 
 class GroupForm(forms.ModelForm):
-    # fields= "__all__"
-    # exclude = ['email']
-
     class Meta:
         model = Group
         fields= ['name', 'description', 'private']
 
+
+class MessageForm(forms.ModelForm):
+    class Meta:
+        model = Message
+        fields = ['description']
