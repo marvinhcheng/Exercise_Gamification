@@ -113,7 +113,6 @@ def group_detail(request, group_id):
             new_message.pub_date = timezone.localtime()
             new_message.message_id = group_id
             new_message.save()
-            return render(request, template_name, context)
     else:
         message_form = MessageForm()
     

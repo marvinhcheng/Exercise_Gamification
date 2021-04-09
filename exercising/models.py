@@ -57,7 +57,7 @@ class Message(models.Model):
     author = models.CharField(max_length=200, null=False, default="no author")
 
     class Meta:
-        ordering = ['pub_date']
+        ordering = ['-pub_date']
 
     def __str__(self):
         return 'Comment {} by {}'.format(self.description, self.author)

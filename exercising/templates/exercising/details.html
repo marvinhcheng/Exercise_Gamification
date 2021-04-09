@@ -1,5 +1,5 @@
 
-
+ <a href="/groups/">Exit</a>
 
 <h2>{{ group }}</h2>
 <p>Owner of group: {{ group.owner }}</p>
@@ -48,8 +48,8 @@
   <h4> Messages: </h4>
   {% for message in messages %}
   <div class="media-body">
-    <h5 class="mt-0">{{ message.author }}</h5>
-    <p>{{ message.description }}</p>
+    <!-- <h5 class="mt-0">{{ message.author }}</h5> -->
+    <p> <b>{{ message.author }}:</b> {{ message.description }}</p>
   </div>
   {% endfor %}
   {% endif %}
