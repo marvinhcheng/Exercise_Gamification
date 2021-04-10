@@ -17,5 +17,9 @@ urlpatterns = [
     path('login/', LoginView.as_view(), name='login'),
     path('logout/', LogoutView.as_view(template_name='exercising/index.html'), name='logout'),
     path('goals/', views.add_goal, name='goals'),
-    path('logs/', views.add_exercise, name='logs')
+    path('logs/', views.add_exercise, name='logs'),
+    path('diet/', TemplateView.as_view(template_name="exercising/diet.html")),
+    path('diet/keto/', TemplateView.as_view(template_name="exercising/keto.html")),
+    path('exercise_tips/', TemplateView.as_view(template_name="exercising/tips.html")),
+    path('exercise_tips/bench/', TemplateView.as_view(template_name="exercising/bench.html"))
 ]
