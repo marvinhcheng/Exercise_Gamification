@@ -7,10 +7,13 @@
 <p>Date created: {{ group.pub_date }}</p>
 <p>Description: {{ group.description }}</p>
 
-<div>{% for member in group.members.all %} {{ member }} {% endfor %}</div>
-<div>{{ group.members.all }}</div>
+<div> 
+  <h3>Group Members</h3>
+  {% for member in group.members.all %} 
+  <ul>{{ member }}</ul>
+   {% endfor %}</div>
 
-<div>{% if request.user == group.owner %} You are the owner {% endif %}</div>
+<!-- <div>{% if request.user == group.owner %} You are the owner {% endif %}</div> -->
 
 
 
