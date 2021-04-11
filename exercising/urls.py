@@ -22,5 +22,6 @@ urlpatterns = [
     path('groups/create_group/', views.CreateGroup.as_view(), name="create_group"),
     path('groups/', views.GroupListView.as_view(), name="groups"),
     path('groups/<int:group_id>', views.group_detail, name="group_detail"),
+    path('groups/<int:group_id>/add/', views.add_to_group, name="add_to_group"),
     path('groups/<int:group_id>/join/', views.join_group)
 ]

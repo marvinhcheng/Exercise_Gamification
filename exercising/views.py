@@ -6,8 +6,9 @@ from django.urls import reverse
 from django.views import generic
 from django.utils import timezone
 from .models import User, Exercise_Log, Profile, Goal_Log, Group, Message
-from .forms import ExerciseForm, GoalsForm, GroupForm, MessageForm
+from .forms import ExerciseForm, GoalsForm, GroupForm, MessageForm, GroupAddForm
 from django.views.generic import TemplateView
+from django.core.exceptions import ObjectDoesNotExist
 
 class GoalsListView(generic.ListView):
     model = Profile
@@ -80,24 +81,6 @@ class GroupListView(generic.ListView):
         return Group.objects.all()
 
 
-# class group_detail(generic.DetailView):
-#     model = Group
-#     template_name = 'exercising/details.html'
-
-#     def post(self, request, message_id):
-#         message_form = MessageForm(request.POST)
-#         if message_form.is_valid():
-#             message = message_form.save(commit=False)
-#             message.author = request.user
-#             message.pub_date = timezone.localtime()
-#             message.save()
-
-#             group.messages.add(message)
-#         return redirect('/groups/'+str(message_id))
-    
-#     def get(self, request, pk):
-#         message_form = MessageForm()
-#         return render(request, self.template_name, {'message_form': message_form})
 
 def group_detail(request, group_id):
     template_name = 'exercising/details.html'
@@ -125,11 +108,43 @@ def group_detail(request, group_id):
     }
 
     return render(request, template_name, context)
+
+def add_to_group(request, group_id):
+    template_name = 'exercising/add_user.html'
+    group = Group.objects.get(id=group_id)
+    if request.method == "POST":
+        add_form = GroupAddForm(request.POST)
+        if add_form.is_valid():
+            try:
+                addee = User.objects.get(username = add_form.cleaned_data['added_user'])
+                group.members.add(addee)
+                
+                
+            except ObjectDoesNotExist:
+                return HttpResponse('Account with username does not exist')
+            return HttpResponseRedirect('/groups/'+str(group_id))
+    else:
+        add_form = GroupAddForm()
+    
+    return render(request, template_name, {'add_form': add_form})
+
+    # if request.method == 'POST':
+    #     add_form = GroupAddForm(request.POST)
+    #     if add_form.is_valid():
+    #         addee = User.objects.get(username = add_form.cleaned_data['added_user'])
+    #         group.members.add(addee)
+    # else:
+    #     add_from = GroupAddForm()
+    # context = {
+    #     'group' : group,
+    #     'add_form': add_form
+    # }
+    # return render(request, template_name, context)
+
     
 def join_group(request, group_id):
     user = request.user
     group = Group.objects.filter(id=group_id).first()
-
     already_member = False
 
     for member in group.members.all():

@@ -40,3 +40,7 @@ class MessageForm(forms.ModelForm):
     class Meta:
         model = Message
         fields = ['description']
+
+class GroupAddForm(forms.Form):
+    added_user = forms.CharField(label = "Enter a username to add to the group")
+
