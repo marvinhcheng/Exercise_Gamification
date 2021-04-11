@@ -47,40 +47,18 @@
           </ul>
         </div>
     </nav>
-  
-    <h2>Goals Logs</h2>
+
+    <h2>Groups</h2>
     <div>
-      <h4>Enter your goal</h4>
-      <form action="/goals/" method="post">
+      <h4>Create Group</h4>
+      <form action="/groups/create_group/" method="post">
         <div>
-          <div class="form-group">{% csrf_token %} {{ form }}</div>
+          <div class="form-group">{% csrf_token %} {{ group_form }}</div>
           <div class="button">
-            <!-- <input type="submit" value="Submit" /> -->
             <button type="submit" class="btn btn-primary">Submit</button>
           </div>
         </div>
       </form>
-    </div>
-    <div>
-      <h4>Log of your goals</h4>
-      <ul>
-        {% for item in user.profile.goals.all %}
-        <li>Your progress of {{ item }}: 0/{{ item.duration }} hours</li>
-        {% endfor %}
-      </ul>
-      <!-- <h4>Log of your exercises</h4>
-      {% if logs_list %}
-      <ul>
-        {% for item in logs_list %}
-        <li>
-          On {{ item }} you did {{item.exercise_type}} for {{ item.duration }}
-          hours
-        </li>
-        {% endfor %}
-      </ul>
-      {% else %}
-      <p>No logs available</p>
-      {% endif %} -->
     </div>
 
     <!--FOOTER-->
