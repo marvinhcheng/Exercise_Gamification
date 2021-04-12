@@ -4,10 +4,13 @@ from django.template import loader, RequestContext
 from django.shortcuts import get_object_or_404, render, redirect
 from django.urls import reverse
 from django.views import generic
+import random
 from django.utils import timezone
 from .models import User, Exercise_Log, Profile, Goal_Log, Group, Message
 from .forms import ExerciseForm, GoalsForm, GroupForm, MessageForm, GroupAddForm
 from django.views.generic import TemplateView
+import spotipy
+from spotipy.oauth2 import SpotifyClientCredentials
 from django.core.exceptions import ObjectDoesNotExist
 
 class GoalsListView(generic.ListView):
@@ -56,6 +59,32 @@ def add_goal(request):
         form2 = GoalsForm()
     return render(request, 'exercising/goals.html', {'form': form2})
 
+def map(request):
+    mapbox_access_token = 'pk.eyJ1Ijoic2VyaGlpMDQ0IiwiYSI6ImNrbmR0d281ZTBhdXgyem9kdDJnNHdtdmcifQ.8K3hi5bBXp2lZTwOWvbFUA'
+    return render(request, 'exercising/map.html', {'mapbox_access_token': mapbox_access_token})
+
+def music (request):
+    artists = [
+        'https://open.spotify.com/artist/791L9eOcjQ3FiorSX2xvcf?si=YYpeZft2RsKDWG_TfGfDBQ',
+        'https://open.spotify.com/artist/3QYk6NujwZNNXFciGYfo0U?si=S29foxTySAqbkIoRFb5AhA',
+        'https://open.spotify.com/artist/5F4tRDDqkTLhPUb0bVceWQ?si=H2mY8j6yQ2y6OJ4elsTzoQ',
+        'https://open.spotify.com/artist/6dJnCgWrQmJNAnmdzQi2Vi?si=AVjoEn-dQDqHcPbCzqGHsw',
+        'https://open.spotify.com/artist/44YvYIWPDPNLJaHiHktrJD?si=mMWTjWK6She9payvsuTMXg'
+    ]
+    x = random.randint(0, 4)
+    # if request.method == 'POST':
+    # artist_uri = request.POST.get('uri')
+    spotify = spotipy.Spotify(client_credentials_manager=SpotifyClientCredentials(client_id='f3195ba0f7ec40d9981e81d14d69192f',client_secret='f704f87a345a4a919aa2f167e97739cf'))
+    results = spotify.artist_top_tracks(artists[x])
+    final_result = results['tracks'][:10]
+    return render(request, 'exercising/music.html', {"results": final_result})
+    # else:
+    #     # for track in results['tracks'][:10]:
+    #     #     print('track    : ' + track['name'])
+    #     #     print('audio    : ' + track['preview_url'])
+    #     #     print('cover art: ' + track['album']['images'][0]['url'])
+    #     #     print()
+    #     return render(request, 'exercising/music.html', )
 
 class CreateGroup(TemplateView):
     template_name = 'exercising/makegroup.html'
@@ -166,4 +195,3 @@ def join_group(request, group_id):
 
     
 
-            

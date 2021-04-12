@@ -19,6 +19,10 @@ urlpatterns = [
     path('goals/', views.add_goal, name='goals'),
     path('logs/', views.add_exercise, name='logs'),
 
+    path('music/', views.music, name='music'),
+    path('map/', views.map, name='map'),
+
+
     path('groups/create_group/', views.CreateGroup.as_view(), name="create_group"),
     path('groups/', views.GroupListView.as_view(), name="groups"),
     path('groups/<int:group_id>', views.group_detail, name="group_detail"),
@@ -28,4 +32,5 @@ urlpatterns = [
     path('diet/keto/', TemplateView.as_view(template_name="exercising/keto.html")),
     path('exercise_tips/', TemplateView.as_view(template_name="exercising/tips.html")),
     path('exercise_tips/bench/', TemplateView.as_view(template_name="exercising/bench.html"))
+
 ]
