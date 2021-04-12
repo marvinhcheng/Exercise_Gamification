@@ -53,43 +53,52 @@
 			</div>
 	</nav>
 
-    <h2>Exercise Logs</h2>
+    <h2>Groups</h2>
     <div>
-      <h4>Enter your exercise</h4>
-      <form action="/logs/" method="post">
-        <div>
-          <div class="form-group">{% csrf_token %} {{ form }}</div>
-          <div class="button">
-            <!-- <input type="submit" value="Submit" /> -->
-            <button type="submit" class="btn btn-primary">Submit</button>
-          </div>
-        </div>
-      </form>
+      <li>
+        <a href="/groups/create_group/">Make a group</a>
+      </li>
     </div>
     <div>
-      <h4>Log of your exercises</h4>
-      <ul>
-        {% for item in user.profile.logs.all %}
-        <li>
-          On {{ item }} you did {{item.exercise_type}} for {{ item.duration }}
-          hours
-        </li>
-        {% endfor %}
-      </ul>
-      <!-- <h4>Log of your exercises</h4>
-      {% if logs_list %}
-      <ul>
-        {% for item in logs_list %}
-        <li>
-          On {{ item }} you did {{item.exercise_type}} for {{ item.duration }}
-          hours
-        </li>
-        {% endfor %}
-      </ul>
-      {% else %}
-      <p>No logs available</p>
-      {% endif %} -->
+      <h3>Groups I own</h3>
+      {% for group in group_list %} {% if group.owner == request.user %}
+      <li>
+        <a href="{{ group.id }}">{{ group }} </a>
+        {% if group.private %} (private) {% else %} (public) {% endif %}
+      </li>
+      {% endif %} {% endfor %}
     </div>
+
+    <div>
+      <h4>My Private Groups</h4>
+      {% for group in group_list %} {% if request.user in group.members.all and request.user != group.owner %}
+      {% if group.private %}
+
+      <li>
+        <a href="{{ group.id }}">{{ group }}</a>
+      </li>
+      {% endif %} {% endif %} {% endfor %}
+    </div>
+    <div>
+      <h4>My Public Groups</h4>
+      {% for group in group_list %} {% if request.user in group.members.all and request.user != group.owner %}
+      {% if not group.private %}
+
+      <li>
+        <a href="{{ group.id }}">{{ group }}</a>
+      </li>
+      {% endif %} {% endif %} {% endfor %}
+    </div>
+    <div>
+      <h4>Explore Public Groups</h4>
+      {% for group in group_list %} {% if group.owner != request.user and not group.private%}
+      {% if request.user not in group.members.all %}
+      <li>
+        <a href="{{ group.id }}">{{ group }}</a>
+      </li>
+      {% endif %} {% endif %} {% endfor %}
+    </div>
+    
 
     <!--FOOTER-->
     <footer class="bg-light text-center text-lg-start">

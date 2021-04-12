@@ -6,15 +6,9 @@ from django import forms
 from django.contrib.auth.models import User
 from django.dispatch import receiver
 from django.db.models.signals import post_save
+from django.conf import settings
+from django.urls import reverse
 
-# class User(models.Model):
-#     firstName = models.CharField(max_length = 200)
-#     lastName = models.CharField(max_length = 200)
-#     identification = models.CharField(max_length = 200)
-#     score = models.CharField(max_length = 200)
-
-#     def __str__(self):
-#         return self.text
 
 class Exercise_Log(models.Model):
     exercise_type = models.CharField(max_length = 50, default = "")
@@ -29,6 +23,48 @@ class Goal_Log(models.Model):
     def __str__(self):
         return str(self.exercise_type)
 
+# class Message(models.Model):
+#     description = models.TextField()
+#     pub_date = models.DateTimeField(auto_now_add=True)
+#     author = models.CharField(max_length=200, null=False, default="no author")
+
+#     class Meta:
+#         ordering = ['pub_date']
+
+#     def __str__(self):
+#         return 'Comment {} by {}'.format(self.description, self.author)
+
+class Group(models.Model):
+    name = models.CharField(max_length=200, null=True)
+    description = models.CharField(max_length=200, null=True)
+    pub_date = models.DateTimeField()
+    members = models.ManyToManyField(User, related_name="members")
+    owner = models.ForeignKey(User, related_name="owner", on_delete = models.CASCADE)
+    email = models.EmailField(max_length=200, null=True)
+    private = models.BooleanField(default = False, null=False)
+    # messages = models.ManyToManyField(Message, blank=True)
+
+
+    def __str__(self):
+        return self.name
+    def get_absolute_url(self):
+        return reverse('group_detail', args=[str(self.id)])
+    
+class Message(models.Model):
+    message = models.ForeignKey(Group, on_delete=models.CASCADE, related_name='messages')
+    description = models.TextField()
+    pub_date = models.DateTimeField(auto_now_add=True)
+    author = models.CharField(max_length=200, null=False, default="no author")
+
+    class Meta:
+        ordering = ['-pub_date']
+
+    def __str__(self):
+        return 'Comment {} by {}'.format(self.description, self.author)
+
+
+
+
 class Profile(models.Model):
     profile = models.OneToOneField(User, on_delete = models.CASCADE, primary_key = True)
     logs = models.ManyToManyField(Exercise_Log, blank=True)
@@ -36,6 +72,7 @@ class Profile(models.Model):
 
     def __str__(self):
         return self.profile.username
+
 
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):

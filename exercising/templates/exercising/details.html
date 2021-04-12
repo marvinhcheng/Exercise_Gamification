@@ -1,0 +1,68 @@
+
+ <a href="/groups/">Exit</a>
+
+<h2>{{ group }}</h2>
+<p>Owner of group: {{ group.owner }}</p>
+<p>Owner email: {{ group.email }}</p>
+<p>Date created: {{ group.pub_date }}</p>
+<p>Description: {{ group.description }}</p>
+
+<div> 
+  <h3>Group Members</h3>
+  {% for member in group.members.all %} 
+  <ul>{{ member }}</ul>
+   {% endfor %}</div>
+
+<!-- <div>{% if request.user == group.owner %} You are the owner {% endif %}</div> -->
+
+
+
+<div>
+  <a href = "{{group.id}}/add/">Add User to Group</a>
+
+<form method="post" action="{{group.id}}/join/">
+  {% csrf_token %} {% if request.user in group.members.all and request.user != group.owner %}
+  <button
+    type="submit"
+    class="btn btn-primary"
+    value="join group"
+    style="height: 50px; width: 100px"
+  >
+    Leave Group
+  </button>
+  {% endif %} {% if request.user not in group.members.all %}
+  <button
+    type="submit"
+    class="btn btn-primary"
+    value="join group"
+    style="height: 50px; width: 100px"
+  >
+    Join Group
+  </button>
+  {% endif %} {% if request.user != group.owner %} Not owner {% endif %}
+</form>
+
+<div>
+  <form method="post">
+    {% csrf_token %}
+    <div class = "form-group">
+      <textarea name="description"></textarea>
+    </div>
+    <input type="submit" class="btn btn-primary btn-sm" value="Send Message" margin-top="15px">
+  </form>
+
+  
+  {% if messages %}
+  <h4> Messages: </h4>
+  {% for message in messages %}
+  <div class="media-body">
+    <!-- <h5 class="mt-0">{{ message.author }}</h5> -->
+    <p> <b>{{ message.author }}:</b> {{ message.description }}</p>
+  </div>
+  {% endfor %}
+  {% endif %}
+
+
+</div>
+
+
