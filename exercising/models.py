@@ -40,13 +40,13 @@ exercises = (
 
 class Profile(models.Model):
     profile = models.OneToOneField(User, related_name='profile', on_delete=models.CASCADE, primary_key=True)
-
+    """
     points = ArrayField(
         models.DecimalField(max_digits=4, decimal_places=2, default=0),
         size=8,
         default=0
     )
-
+    """
     def __str__(self):
         return self.profile.username
 

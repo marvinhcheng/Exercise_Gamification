@@ -32,7 +32,7 @@ def add_exercise(request):
         if form.is_valid():
             new_exercise = Exercise_Log()
             new_exercise.exercise_type = form.cleaned_data['exercise_type']
-            new_exercise.duration = form.cleaned_data['duration']
+            new_exercise.amount = form.cleaned_data['duration']
             new_exercise.date = form.cleaned_data['date']
             new_exercise.profile = request.user.profile
             new_exercise.save()
@@ -50,7 +50,7 @@ def add_goal(request):
         if form2.is_valid():
             new_goal = Goal_Log()
             new_goal.exercise_type = form2.cleaned_data['exercise_type']
-            new_goal.duration = form2.cleaned_data['duration']
+            new_goal.amount = form2.cleaned_data['duration']
             new_goal.profile = request.user.profile
             new_goal.save()
 

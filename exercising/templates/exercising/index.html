@@ -65,7 +65,7 @@
 
     <h4>Log of your exercises</h4>
     <ul>
-      {% for item in User.profile.logs.all %}
+      {% for item in User.profile.logs %}
       <li>
         On {{ item }} you did {{item.exercise_type}} for {{ item.amount }}
         hours
@@ -75,7 +75,7 @@
 
     <h4>Log of your goals</h4>
     <ul>
-      {% for item in User.profile.goals.all %}
+      {% for item in User.profile.goals %}
       <li>Your progress of {{ item }}: {{ item.get_exercise_hours }}/{{ item.amount }} hours</li>
       {% endfor %}
     </ul>
