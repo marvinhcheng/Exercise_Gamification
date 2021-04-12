@@ -38,34 +38,21 @@ exercises = (
 )
 
 
-class Profile(models.Model):
-    profile = models.OneToOneField(User, related_name='profile', on_delete=models.CASCADE, primary_key=True)
-
-    points = ArrayField(
-        models.DecimalField(max_digits=4, decimal_places=2, default=0),
-        size=8,
-        default=0
-    )
-
-    def __str__(self):
-        return self.profile.username
-
-
 class Exercise_Log(models.Model):
     exercise_type = models.CharField(max_length = 20, choices=exercises, default='Cardio')
     # region = models.CharField(max_length = 10, choices=muscle_regions, default='Arms')
     amount = models.DecimalField(max_digits = 4, decimal_places=2, default=0.0)
     date = models.DateField(default=datetime.date.today)
-    user = models.ForeignKey(Profile, default=User.profile, related_name='logs', on_delete=models.CASCADE)
+
     def __str__(self):
         return str(self.date)
+
 
 class Goal_Log(models.Model):
     exercise = models.CharField(max_length=20, choices=exercises, default='Cardio')
     # region = models.CharField(max_length = 10, choices=muscle_regions, default='Arms')
     amount = models.DecimalField(max_digits=4, decimal_places=2, default=0.0)
     date = models.DateField(default=datetime.date.today)
-    user = models.ForeignKey(Profile, default=User.profile, related_name='goals', on_delete=models.CASCADE)
 
     def __str__(self):
         return str(self.exercise_type)
@@ -76,6 +63,22 @@ class Goal_Log(models.Model):
             if log.exercise == exercise and log.date >= date:
                 total += log.amount
         return total
+
+
+class Profile(models.Model):
+    profile = models.OneToOneField(User, related_name='profile', on_delete=models.CASCADE, primary_key=True)
+    logs = models.ManyToOneRel(Exercise_Log, related_name='logs', on_delete=models.CASCADE)
+    goals = models.ManyToOneRel(Goal_Log, related_name='goals', on_delete=models.CASCADE)
+
+    points = ArrayField(
+        models.DecimalField(max_digits=4, decimal_places=2, default=0),
+        size=8,
+        default=0
+    )
+
+    def __str__(self):
+        return self.profile.username
+
 
 # class Message(models.Model):
 #     description = models.TextField()
