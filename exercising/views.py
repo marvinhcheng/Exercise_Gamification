@@ -34,6 +34,7 @@ def add_exercise(request):
             new_exercise.exercise_type = form.cleaned_data['exercise_type']
             new_exercise.duration = form.cleaned_data['duration']
             new_exercise.date = form.cleaned_data['date']
+            new_exercise.profile = request.user.profile
             new_exercise.save()
 
             request.user.profile.logs.add(new_exercise)
