@@ -69,7 +69,7 @@
     <div>
       <h4>Log of your exercises</h4>
       <ul>
-        {% for item in user.profile.logs.all %}
+        {% for item in User.profile.logs.all %}
         <li>
           On {{ item }} you did {{item.exercise_type}} for {{ item.duration }}
           hours

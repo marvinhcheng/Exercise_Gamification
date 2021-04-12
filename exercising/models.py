@@ -1,25 +1,79 @@
 import datetime
-
 from django.db import models
 from django.utils import timezone
-from django import forms
+from django import forms, template
 from django.contrib.auth.models import User
+from django.contrib.postgres.fields import ArrayField
 from django.dispatch import receiver
 from django.db.models.signals import post_save
 from django.conf import settings
 from django.urls import reverse
 
+register = template.Library
+
+
+# excercise_types = (
+#     ("CARDIO", "Cardio"),
+#     ("WEIGHT_TRAINING", "Weight Training")
+#     ("FLEXIBILITY", "Flexibility")
+# )
+
+# muscle_regions = (
+#     ("ARMS", "Arms"),
+#     ("LEGS", "Legs"),
+#     ("BACK", "Back"),
+#     ("CORE", "Core"),
+#     ("CHEST", "Chest"),
+# )
+
+exercises = (
+    ("CARDIO", "Cardio"),
+    ("WEIGHT_TRAINING", "Weight Training"),
+    ("FLEXIBILITY", "Flexibility"),
+    ("ARMS", "Arms"),
+    ("LEGS", "Legs"),
+    ("BACK", "Back"),
+    ("CORE", "Core"),
+    ("CHEST", "Chest"),
+)
+
+
+class Profile(models.Model):
+    profile = models.OneToOneField(User, related_name='profile', on_delete=models.CASCADE, primary_key=True)
+
+    points = ArrayField(
+        models.DecimalField(max_digits=4, decimal_places=2, default=0),
+        size=8,
+    )
+
+    def __str__(self):
+        return self.profile.username
+
+    @register.simple_tag
+    def get_exercise_hours(log_type, log_date):
+        total = 0.0
+        for log in profile.excercise_log.all():
+            if log.exercise == log_type and log.date <= log_date:
+                total += log.amount
+        return total
+
 
 class Exercise_Log(models.Model):
-    exercise_type = models.CharField(max_length = 50, default = "")
-    duration = models.DecimalField(max_digits = 4, decimal_places = 2, default=0.0)
+    exercise_type = models.CharField(max_length = 20, choices=exercises, default='Cardio')
+    # region = models.CharField(max_length = 10, choices=muscle_regions, default='Arms')
+    amount = models.DecimalField(max_digits = 4, decimal_places=2, default=0.0)
     date = models.DateField(default=datetime.date.today)
+    user = models.ForeignKey(Profile, related_name='logs', on_delete=models.CASCADE)
     def __str__(self):
         return str(self.date)
 
 class Goal_Log(models.Model):
-    exercise_type = models.CharField(max_length = 50, default = "")
-    duration = models.DecimalField(max_digits = 4, decimal_places = 2, default=0.0)
+    exercise = models.CharField(max_length=20, choices=exercises, default='Cardio')
+    # region = models.CharField(max_length = 10, choices=muscle_regions, default='Arms')
+    amount = models.DecimalField(max_digits=4, decimal_places=2, default=0.0)
+    date = models.DateField(default=datetime.date.today)
+    user = models.ForeignKey(Profile, related_name='goals', on_delete=models.CASCADE)
+
     def __str__(self):
         return str(self.exercise_type)
 
@@ -61,17 +115,6 @@ class Message(models.Model):
 
     def __str__(self):
         return 'Comment {} by {}'.format(self.description, self.author)
-
-
-
-
-class Profile(models.Model):
-    profile = models.OneToOneField(User, on_delete = models.CASCADE, primary_key = True)
-    logs = models.ManyToManyField(Exercise_Log, blank=True)
-    goals = models.ManyToManyField(Goal_Log, blank=True)
-
-    def __str__(self):
-        return self.profile.username
 
 
 @receiver(post_save, sender=User)

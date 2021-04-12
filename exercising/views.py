@@ -186,12 +186,3 @@ def join_group(request, group_id):
         return redirect('/groups/')
 
     return redirect('/groups/'+str(group_id))
-
-
-
-
-
-
-
-    
-
