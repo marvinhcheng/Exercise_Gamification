@@ -51,6 +51,7 @@ def add_goal(request):
             new_goal = Goal_Log()
             new_goal.exercise_type = form2.cleaned_data['exercise_type']
             new_goal.duration = form2.cleaned_data['duration']
+            new_goal.profile = request.user.profile
             new_goal.save()
 
             request.user.profile.goals.add(new_goal)
