@@ -17,5 +17,7 @@ urlpatterns = [
     path('login/', LoginView.as_view(), name='login'),
     path('logout/', LogoutView.as_view(template_name='exercising/index.html'), name='logout'),
     path('goals/', views.add_goal, name='goals'),
-    path('logs/', views.add_exercise, name='logs')
+    path('logs/', views.add_exercise, name='logs'),
+    path('music/', views.music, name='music'),
+    path('map/', views.map, name='map')
 ]
