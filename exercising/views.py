@@ -39,6 +39,9 @@ def add_exercise(request):
 
             request.user.profile.logs.add(new_exercise)
             request.user.save()
+
+            request.user.profile.points += new_exercise.amount
+
             return HttpResponseRedirect('/logs/')
     else:
         form = ExerciseForm()
