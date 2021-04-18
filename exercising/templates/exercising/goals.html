@@ -69,7 +69,7 @@
     <div>
       <h4>Log of your goals</h4>
       <ul>
-        {% for item in User.profile.goals %}
+        {% for item in user.profile.goals.all %}
         <li>Your progress of {{ item }}: {{ item.get_exercise_hours }}/{{ item.amount }} hours</li>
         {% endfor %}
       </ul>

@@ -1,5 +1,5 @@
 from django import forms
-from .models import Group, Message, exercises
+from .models import Group, Message, exercises, Exercise_Log, Goal_Log
 
 
 class ExerciseForm(forms.Form):

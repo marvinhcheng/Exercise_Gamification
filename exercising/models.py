@@ -62,9 +62,9 @@ class Exercise_Log(models.Model):
         return str(self.date)
 
 class Goal_Log(models.Model):
-    exercise = models.CharField(max_length=20, choices=exercises, default='Cardio')
+    exercise_type = models.CharField(max_length=20, choices=exercises, default='Cardio')
     # region = models.CharField(max_length = 10, choices=muscle_regions, default='Arms')
-    amount = models.DecimalField(max_digits=4, decimal_places=2, default=0.0)
+    amount = models.DecimalField(max_digits=10, decimal_places=5, default=0.0)
     date = models.DateField(default=datetime.date.today)
     profile = models.ForeignKey(Profile, null=True, related_name='goals', on_delete=models.CASCADE)
 
@@ -72,11 +72,24 @@ class Goal_Log(models.Model):
         return str(self.exercise_type)
 
     def get_exercise_hours(self):
-        total = 0.0
-        for log in profile.excercise_log.all():
-            if log.exercise == exercise and log.date >= date:
+        total = 0
+        for log in Exercise_Log.objects.all():
+            if log.exercise_type == self.exercise_type and log.date >= self.date:
                 total += log.amount
         return total
+
+
+#class Points(models.Model):
+#    amount = models.DecimalField(max_digits=10, decimal_places=5, default=0.0)
+#    profile = models.OneToOneField(Profile, null=True, related_name='points', on_delete=models.CASCADE)
+
+#    def get_points(self):
+#        total = 0
+#        for log in Exercise_Log.objects.all():
+#            total += log.amount
+
+#        self.amount = total
+#        return total
 
 
 # class Message(models.Model):
