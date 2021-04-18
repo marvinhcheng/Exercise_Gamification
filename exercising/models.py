@@ -72,7 +72,7 @@ class Goal_Log(models.Model):
     def get_exercise_hours(self):
         total = 0
         for log in Exercise_Log.objects.all():
-            if log.exercise_type == self.exercise_type and log.date >= self.date:
+            if log.profile == self.profile and log.exercise_type == self.exercise_type and log.date >= self.date:
                 total += log.amount
         return total
 
