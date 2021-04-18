@@ -32,12 +32,13 @@ def add_exercise(request):
         if form.is_valid():
             new_exercise = Exercise_Log()
             new_exercise.exercise_type = form.cleaned_data['exercise_type']
-            new_exercise.amount = form.cleaned_data['duration']
+            # new_exercise.region_type = form.cleaned_data['region_type']
+            new_exercise.amount = form.cleaned_data['amount']
             new_exercise.date = form.cleaned_data['date']
             new_exercise.profile = request.user.profile
             new_exercise.save()
 
-            request.user.profile.add_points(new_exercise.amount) 
+            request.user.profile.add_points(new_exercise) 
 
             request.user.profile.logs.add(new_exercise)
             request.user.save()
@@ -53,7 +54,8 @@ def add_goal(request):
         if form2.is_valid():
             new_goal = Goal_Log()
             new_goal.exercise_type = form2.cleaned_data['exercise_type']
-            new_goal.amount = form2.cleaned_data['duration']
+            # new_goal.region_type = form.cleaned_data['region_type']
+            new_goal.amount = form2.cleaned_data['amount']
             new_goal.profile = request.user.profile
             new_goal.save()
 
@@ -63,6 +65,15 @@ def add_goal(request):
     else:
         form2 = GoalsForm()
     return render(request, 'exercising/goals.html', {'form': form2})
+
+def add_points(request, ex): 
+    if ex.exercise_type == "Cardio":
+        request.user.profile.points_cardio += ex.amount*16
+    if ex.exercise_type == "Weight Training":
+        request.user.profile.points_weight += ex.amount*30
+    if ex.exercise_type == "Calisthenics":
+        request.user.profile.points_calis += ex.amount*8
+    request.user.profile.save()
 
 
 

@@ -29,37 +29,33 @@ register = template.Library
 exercises = (
     ("CARDIO", "Cardio"),
     ("WEIGHT_TRAINING", "Weight Training"),
-    ("FLEXIBILITY", "Flexibility"),
+    ("CALISTHENICS", "Calisthenics"),
 )
 
-body_parts = (
-    ("ARMS", "Arms"),
-    ("LEGS", "Legs"),
-    ("BACK", "Back"),
-    ("CORE", "Core"),
-    ("CHEST", "Chest"),
-)
+# regions = (
+#     ("ANY", "Any"),
+#     ("ARMS", "Arms"),
+#     ("LEGS", "Legs"),
+#     ("BACK", "Back"),
+#     ("CORE", "Core"),
+#     ("CHEST", "Chest"),
+# )
 
 
 class Profile(models.Model):
     profile = models.OneToOneField(User, related_name='profile', on_delete=models.CASCADE, primary_key=True)
-    points = models.IntegerField(default=0.0)
+    points_cardio = models.IntegerField(max_length=9, default=0)
+    points_weight = models.IntegerField(max_length=9, default=0)
+    points_calis = models.IntegerField(max_length=9, default=0)
     
     def __str__(self):
         return self.profile.username
 
-    def add_points(self, pnt):
-        self.points += pnt
-        self.save()
-    
-    def get_points(self):
-        return self.points
-
 
 class Exercise_Log(models.Model):
     exercise_type = models.CharField(max_length = 20, choices=exercises, default='Cardio')
-    # region = models.CharField(max_length = 10, choices=muscle_regions, default='Arms')
-    amount = models.DecimalField(max_digits = 4, decimal_places=2, default=0.0)
+    # region_type = models.CharField(max_length = 10, choices=regions, default='Any')
+    amount = models.IntegerField(max_length=4, default=0)
     date = models.DateField(default=datetime.date.today)
     profile = models.ForeignKey(Profile, null=True, related_name='logs', on_delete=models.CASCADE)
 
@@ -68,19 +64,23 @@ class Exercise_Log(models.Model):
 
 class Goal_Log(models.Model):
     exercise_type = models.CharField(max_length=20, choices=exercises, default='Cardio')
-    # region = models.CharField(max_length = 10, choices=muscle_regions, default='Arms')
-    amount = models.DecimalField(max_digits=10, decimal_places=5, default=0.0)
+    # region_type = models.CharField(max_length = 10, choices=regions, default='Any')
+    amount = models.IntegerField(max_length=4, default=0)
     date = models.DateField(default=datetime.date.today)
     profile = models.ForeignKey(Profile, null=True, related_name='goals', on_delete=models.CASCADE)
 
     def __str__(self):
         return str(self.exercise_type)
 
-    def get_exercise_hours(self):
+    def get_exercise_amount(self):
         total = 0
         for log in Exercise_Log.objects.filter(profile=self.profile, exercise_type=self.exercise_type):
             if log.date >= self.date:
+                # if log.region_type == "Any":
                 total += log.amount
+                # else: 
+                #     if log.region_type == self.region_type:
+                #         total += log.amount
         return total
 
 

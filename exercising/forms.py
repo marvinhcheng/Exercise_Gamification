@@ -1,17 +1,28 @@
 from django import forms
-from .models import Group, Message, exercises, Exercise_Log, Goal_Log
+from .models import Group, Message, Exercise_Log, Goal_Log, exercises#, regions
 
 
 class ExerciseForm(forms.Form):
-    exercise_type = forms.MultipleChoiceField(choices = exercises, label ="Exercise Type")
-    duration = forms.DecimalField(label = "Duration (in hours)")
-    date = forms.DateField(label = "Date")
+    exercise_type = forms.MultipleChoiceField(choices = exercises, label="Exercise Type")
+    # region_type = forms.MultipleChoiceField(choices=regions, label="Muscle Region")
+    amount = forms.IntegerField(label="Duration (min)")
+    # if exercise_type == "Weight Training":
+    #     amount.label = "Number of Reps"
+    # else:
+    #     amount.label = "Duration (min)"
+    
+    date = forms.DateField(label="Date")
 
 
 class GoalsForm(forms.Form):
-    exercise_type = forms.MultipleChoiceField(choices = exercises, label ="Exercise Type")
-    duration = forms.DecimalField(label = "Duration (in hours)")
-    date = forms.DateField(label = "Date")
+    exercise_type = forms.MultipleChoiceField(choices=exercises, label="Exercise Type")
+    # region_type = forms.MultipleChoiceField(choices=regions, label="Muscle Region")
+    amount = forms.IntegerField(label="Duration (min)")
+    # if exercise_type == "Weight Training":
+    #     amount.label = "Number of Reps"
+    # else:
+    #     amount.label = "Duration (min)"
+    date = forms.DateField(label="Date")
 
 
 class GroupForm(forms.ModelForm):
@@ -26,5 +37,5 @@ class MessageForm(forms.ModelForm):
         fields = ['description']
 
 class GroupAddForm(forms.Form):
-    added_user = forms.CharField(label = "Enter a username to add to the group")
+    added_user = forms.CharField(label ="Enter a username to add to the group")
 
