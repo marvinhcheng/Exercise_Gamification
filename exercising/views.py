@@ -37,10 +37,10 @@ def add_exercise(request):
             new_exercise.profile = request.user.profile
             new_exercise.save()
 
+            request.user.profile.add_points(new_exercise.amount) 
+
             request.user.profile.logs.add(new_exercise)
             request.user.save()
-
-            request.user.profile.points += new_exercise.amount
 
             return HttpResponseRedirect('/logs/')
     else:
@@ -63,6 +63,8 @@ def add_goal(request):
     else:
         form2 = GoalsForm()
     return render(request, 'exercising/goals.html', {'form': form2})
+
+
 
 def map(request):
     mapbox_access_token = 'pk.eyJ1Ijoic2VyaGlpMDQ0IiwiYSI6ImNrbmR0d281ZTBhdXgyem9kdDJnNHdtdmcifQ.8K3hi5bBXp2lZTwOWvbFUA'

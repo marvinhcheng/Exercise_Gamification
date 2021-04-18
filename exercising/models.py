@@ -30,6 +30,9 @@ exercises = (
     ("CARDIO", "Cardio"),
     ("WEIGHT_TRAINING", "Weight Training"),
     ("FLEXIBILITY", "Flexibility"),
+)
+
+body_parts = (
     ("ARMS", "Arms"),
     ("LEGS", "Legs"),
     ("BACK", "Back"),
@@ -44,9 +47,13 @@ class Profile(models.Model):
     
     def __str__(self):
         return self.profile.username
+
+    def add_points(self, pnt):
+        self.points += pnt
+        self.save()
     
     def get_points(self):
-        return points
+        return self.points
 
 
 class Exercise_Log(models.Model):
@@ -71,8 +78,8 @@ class Goal_Log(models.Model):
 
     def get_exercise_hours(self):
         total = 0
-        for log in Exercise_Log.objects.all():
-            if log.profile == self.profile and log.exercise_type == self.exercise_type and log.date >= self.date:
+        for log in Exercise_Log.objects.filter(profile=self.profile, exercise_type=self.exercise_type):
+            if log.date >= self.date:
                 total += log.amount
         return total
 
