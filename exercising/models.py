@@ -44,9 +44,9 @@ exercises = (
 
 class Profile(models.Model):
     profile = models.OneToOneField(User, related_name='profile', on_delete=models.CASCADE, primary_key=True)
-    points_cardio = models.IntegerField(max_length=9, default=0, null=True)
-    points_weight = models.IntegerField(max_length=9, default=0, null=True)
-    points_calis = models.IntegerField(max_length=9, default=0, null=True)
+    points_cardio = models.IntegerField(default=0, null=True)
+    points_weight = models.IntegerField(default=0, null=True)
+    points_calis = models.IntegerField( default=0, null=True)
     
     def __str__(self):
         return self.profile.username
@@ -55,7 +55,7 @@ class Profile(models.Model):
 class Exercise_Log(models.Model):
     exercise_type = models.CharField(max_length = 20, choices=exercises, default='Cardio')
     # region_type = models.CharField(max_length = 10, choices=regions, default='Any')
-    amount = models.IntegerField(max_length=4, default=0)
+    amount = models.IntegerField(default=0)
     date = models.DateField(default=datetime.date.today)
     profile = models.ForeignKey(Profile, null=True, related_name='logs', on_delete=models.CASCADE)
 
@@ -65,7 +65,7 @@ class Exercise_Log(models.Model):
 class Goal_Log(models.Model):
     exercise_type = models.CharField(max_length=20, choices=exercises, default='Cardio')
     # region_type = models.CharField(max_length = 10, choices=regions, default='Any')
-    amount = models.IntegerField(max_length=4, default=0)
+    amount = models.IntegerField(default=0)
     date = models.DateField(default=datetime.date.today)
     profile = models.ForeignKey(Profile, null=True, related_name='goals', on_delete=models.CASCADE)
 
