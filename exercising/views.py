@@ -38,17 +38,26 @@ def add_exercise(request):
             new_exercise.profile = request.user.profile
             new_exercise.save()
 
-            #This code mad me want to punch a hole through my screen
-            if new_exercise.exercise_type[0] == 'CARDIO':
-                request.user.profile.points_cardio += new_exercise.amount*16
-            if new_exercise.exercise_type[0] == 'WEIGHT_TRAINING':
-                request.user.profile.points_weight += new_exercise.amount*30
-            if new_exercise.exercise_type[0] == 'CALISTHENICS':
-                request.user.profile.points_calis += new_exercise.amount*8
+            prof = request.user.profile
 
-            request.user.profile.logs.add(new_exercise)
+            #This code made me want to punch a hole through my screen
+            if new_exercise.exercise_type[0] == 'CARDIO':
+                if prof.points_cardio == None:
+                    prof.points_cardio = 0
+                prof.points_cardio += new_exercise.amount*16
+            if new_exercise.exercise_type[0] == 'WEIGHT_TRAINING':
+                if prof.points_weight == None:
+                    prof.points_weight = 0
+                prof.points_weight += new_exercise.amount*30
+            if new_exercise.exercise_type[0] == 'CALISTHENICS':
+                if prof.points_calis == None:
+                    prof.points_calis = 0
+                prof.points_calis += new_exercise.amount*8
+            prof.points_total = prof.points_cardio + prof.points_weight + prof.points_calis
+
+            prof.logs.add(new_exercise)
             request.user.save()
-            request.user.profile.save()
+            prof.save()
 
             return HttpResponseRedirect('/logs/')
     else:
@@ -73,7 +82,8 @@ def add_goal(request):
         form2 = GoalsForm()
     return render(request, 'exercising/goals.html', {'form': form2})
 
-
+def leaderboard(points_type):
+    return Profile.filter(points_total != None).order_by(points_type)[:10]
 
 def map(request):
     mapbox_access_token = 'pk.eyJ1Ijoic2VyaGlpMDQ0IiwiYSI6ImNrbmR0d281ZTBhdXgyem9kdDJnNHdtdmcifQ.8K3hi5bBXp2lZTwOWvbFUA'
