@@ -15,7 +15,18 @@
   </head>
 
 
- <a href="/groups/">Exit</a>
+ <!-- <a href="/groups/">Exit</a> -->
+
+ <form action="/groups/">
+  <button
+    type="submit"
+    class="btn btn-primary"
+    value="join group"
+    style="height: 50px; width: 100px"
+  >
+  &laquo; Exit
+  </button>
+</form>
 
  <div class = "container">
    <div class="row">
@@ -39,7 +50,7 @@
               type="submit"
               class="btn btn-primary"
               value="join group"
-              style="height: 70px; width: 100px"
+              style="height: 70px; width: 130px"
             >
               Add User to Group
             </button>
@@ -52,7 +63,7 @@
               type="submit"
               class="btn btn-primary"
               value="join group"
-              style="height: 70px; width: 100px"
+              style="height: 70px; width: 130px"
             >
               Add User to Group
             </button>
@@ -68,7 +79,7 @@
               type="submit"
               class="btn btn-primary"
               value="join group"
-              style="height: 70px; width: 100px"
+              style="height: 70px; width: 130px"
             >
               Leave Group
             </button>
@@ -77,7 +88,7 @@
               type="submit"
               class="btn btn-primary"
               value="join group"
-              style="height: 70px; width: 100px"
+              style="height: 70px; width: 130px"
             >
               Join Group
             </button>
@@ -86,6 +97,18 @@
 
          </div>
          <div class="col">
+           {% if group.owner == request.user %}
+           <form action="{{group.id}}/edit/">
+            <button
+              type="submit"
+              class="btn btn-primary"
+              value="join group"
+              style="height: 70px; width: 130px"
+            >
+              Edit Group 
+            </button>
+          </form>
+          {% endif %}
 
          </div>
        </div>
@@ -109,7 +132,7 @@
 
 
       <div class="col">
-        <h4>Send a Message to the Group</h4>
+        <h4 class = "text-center">Send a Message to the Group</h4>
         <form method="post">
           {% csrf_token %}
           <div class = "form-group">
@@ -123,14 +146,24 @@
         <h4> Messages: </h4>
         {% for message in messages %}
         <div class="media-body" style="border: double;">
-          <!-- <h5 class="mt-0">{{ message.author }}</h5> -->
-          <p> <b>{{ message.author }}:</b> {{ message.description }}</p>
+          <div class = "row">
+            <div class = "col">
+              <b>{{ message.author }}:</b> {{ message.description }}
+            </div>
+            <div class = "col text-center">
+              {{ message.pub_date }}
+            </div>
+  
+          </div>
         </div>
+        
+        
         {% endfor %}
         {% endif %}
       </div>
    </div>
  </div>
+
  
 
 
