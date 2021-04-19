@@ -76,11 +76,14 @@
     <h4>Log of your goals</h4>
       <ul>
         {% for item in user.profile.goals.all %}
-        <li>Your progress of {{ item }}: {{ item.get_exercise_hours }}/{{ item.amount }} hours</li>
+        <li>Your progress of {{ item }}: {{ item.get_exercise_amount }}/{{ item.amount }} hours</li>
         {% endfor %}
       </ul>
 	  
-	<h4>Your Points: </h4> {{ user.profile.points.get_points }}
+	<h4>Your Points: </h4> 
+  <li>Cardio Points: {{ user.profile.points_cardio }}</li>
+  <li>Weight Training Points: {{ user.profile.points_weight }}</li>
+  <li>Calisthenics Points: {{ user.profile.points_calis }}</li>
 		
     <!--FOOTER-->
     <footer class="bg-light text-center text-lg-start">
