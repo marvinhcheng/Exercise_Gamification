@@ -43,18 +43,21 @@ def add_exercise(request):
             if new_exercise.exercise_type[0] == 'CARDIO':
                 if request.user.profile.points_cardio == None:
                     request.user.profile.points_cardio = 0
+                    request.user.profile.points_total = 0
                 request.user.profile.points_cardio += new_exercise.amount*16
                 request.user.profile.points_total += new_exercise.amount*16
             if new_exercise.exercise_type[0] == 'WEIGHT_TRAINING':
                 if request.user.profile.points_weight == None:
                     request.user.profile.points_weight = 0
+                    request.user.profile.points_total = 0
                 request.user.profile.points_weight += new_exercise.amount*30
-                request.user.profile.points_total += new_exercise.amount*16
+                request.user.profile.points_total += new_exercise.amount*30
             if new_exercise.exercise_type[0] == 'CALISTHENICS':
                 if request.user.profile.points_calis == None:
                     request.user.profile.points_calis = 0
+                    request.user.profile.points_total = 0
                 request.user.profile.points_calis += new_exercise.amount*8
-                request.user.profile.points_total += new_exercise.amount*16
+                request.user.profile.points_total += new_exercise.amount*8
 
             request.user.profile.logs.add(new_exercise)
             request.user.save()
