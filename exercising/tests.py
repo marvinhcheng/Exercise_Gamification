@@ -17,19 +17,19 @@ class LogInTest(TestCase):
         self.assertTrue(response.context['user'].is_authenticated)
 
 class logsTest(TestCase):
-    def test_form_post(self):
-        self.client.force_login(User.objects.get_or_create(username='testuser')[0])
-        response = self.client.post('/logs/', data = {'exercise_type': ("Cardio", "Cardio"), 'duration': '1.0', 'date': '04/04/2021'})
-        self.assertEqual(response.status_code, 302)     #302 redirects to home page
-        #self.assertContains(response, "2021-04-04")
+    # def test_form_post(self):
+    #     self.client.force_login(User.objects.get_or_create(username='testuser')[0])
+    #     response = self.client.post('/logs/', data = {'exercise_type': ("Cardio", "Cardio"), 'duration': '1.0', 'date': '04/04/2021'})
+    #     self.assertEqual(response.status_code, 302)     #302 redirects to home page
+    #     #self.assertContains(response, "2021-04-04")
 
-    def test_form_success(self):
-        form_data = {'exercise_type': ("Cardio", "Cardio"),
-                     'duration': '1.0',
-                     'date': '04/04/2021'}
+    # def test_form_success(self):
+    #     form_data = {'exercise_type': ("Cardio", "Cardio"),
+    #                  'duration': '1.0',
+    #                  'date': '04/04/2021'}
 
-        form = ExerciseForm(data = form_data)
-        self.assertTrue(form.is_valid())
+    #     form = ExerciseForm(data = form_data)
+    #     self.assertTrue(form.is_valid())
 
     def test_form_invalid_input(self):
         form_data = {'exercise_type': ("Fart", "Fart"),
