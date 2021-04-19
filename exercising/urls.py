@@ -27,6 +27,7 @@ urlpatterns = [
     path('groups/', views.GroupListView.as_view(), name="groups"),
     path('groups/<int:group_id>', views.group_detail, name="group_detail"),
     path('groups/<int:group_id>/add/', views.add_to_group, name="add_to_group"),
+    path('groups/<int:group_id>/edit/remove/', views.remove_from_group, name="remove_from_group"),
     path('groups/<int:group_id>/join/', views.join_group),
     path('groups/<int:group_id>/edit/', views.edit_group.as_view(), name="edit"),
     path('groups/<int:group_id>/edit/delete_group/', views.delete_group, name="delete_group"),

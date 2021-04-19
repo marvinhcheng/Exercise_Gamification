@@ -234,6 +234,24 @@ def add_to_group(request, group_id):
     
     return render(request, template_name, {'add_form': add_form})
 
+def remove_from_group(request, group_id):
+    template_name = 'exercising/editgroup.html'
+    group = Group.objects.get(id=group_id)
+    if request.method == "POST":
+        remove_form = GroupAddForm(request.POST)
+        if remove_form.is_valid():
+            try:
+                removee = User.objects.get(username = remove_form.cleaned_data['added_user'])
+                group.members.remove(removee)
+                
+                
+            except ObjectDoesNotExist:
+                return HttpResponse('Account with username does not exist')
+            return HttpResponseRedirect('/groups/'+str(group_id) +"/edit/")
+    else:
+        remove_form = GroupAddForm()
+    
+    return render(request, template_name, {'remove_form': remove_form})
 
     
 def join_group(request, group_id):
