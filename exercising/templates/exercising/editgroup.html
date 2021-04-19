@@ -62,6 +62,27 @@
         </button>
     </form>
 
+    <h2>Enter the Username of the User you want to remove</h2>
+    <!-- <form action="./remove/">
+      <button
+        type="submit"
+        class="btn btn-primary"
+        value="join group"
+        style="height: 60px; width: 100px"
+      >
+      &laquo; Go back
+      </button>
+    </form> -->
+    <div>  
+      <form method="post" action ="./remove/">
+        {% csrf_token %}
+        <div class = "form-group">
+          <textarea name="added_user"></textarea>
+        </div>
+        <input type="submit" class="btn btn-success" value="Remove User From Group" margin-top="15px">
+      </form>
+    </div>
+
 
     <!--FOOTER-->
     <footer class="bg-light text-center text-lg-start">
