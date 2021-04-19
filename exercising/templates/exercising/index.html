@@ -55,9 +55,10 @@
 			</div>
 	</nav>
   
-    <h1>My Project</h1>
+    <!-- <h1>Profile</h1> -->
     {% if user.is_authenticated %}
-    <p>Welcome, {{ user.username }} !</p>
+    <!-- <p>Welcome, {{ user.username }} !</p> -->
+    <h1>You: {{ user.username }}</h1>
 
     {% else %}
     <a href="{% provider_login_url 'google' %}">Login with Google</a>
@@ -84,6 +85,9 @@
   <li>Cardio Points: {{ user.profile.points_cardio }}</li>
   <li>Weight Training Points: {{ user.profile.points_weight }}</li>
   <li>Calisthenics Points: {{ user.profile.points_calis }}</li>
+
+  <h4>Total Points</h4>
+  {{ user.profile.points_total}}
 		
     <!--FOOTER-->
     <footer class="bg-light text-center text-lg-start">

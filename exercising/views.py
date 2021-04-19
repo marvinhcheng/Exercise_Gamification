@@ -43,14 +43,17 @@ def add_exercise(request):
                 if request.user.profile.points_cardio == None:
                     request.user.profile.points_cardio = 0
                 request.user.profile.points_cardio += new_exercise.amount*16
+                request.user.profile.points_total += new_exercise.amount*16
             if new_exercise.exercise_type[0] == 'WEIGHT_TRAINING':
                 if request.user.profile.points_weight == None:
                     request.user.profile.points_weight = 0
                 request.user.profile.points_weight += new_exercise.amount*30
+                request.user.profile.points_total += new_exercise.amount*16
             if new_exercise.exercise_type[0] == 'CALISTHENICS':
                 if request.user.profile.points_calis == None:
                     request.user.profile.points_calis = 0
                 request.user.profile.points_calis += new_exercise.amount*8
+                request.user.profile.points_total += new_exercise.amount*16
 
             request.user.profile.logs.add(new_exercise)
             request.user.save()
@@ -118,6 +121,7 @@ class CreateGroup(TemplateView):
             group.pub_date = timezone.localtime()
             group.email = request.user.email
             group.save()
+            group.members.add(group.owner)
         context = {'group_form': group_form}
         return redirect('/groups/')
     
@@ -159,6 +163,7 @@ def group_detail(request, group_id):
     }
 
     return render(request, template_name, context)
+    
 
 def add_to_group(request, group_id):
     template_name = 'exercising/add_user.html'
@@ -179,18 +184,6 @@ def add_to_group(request, group_id):
     
     return render(request, template_name, {'add_form': add_form})
 
-    # if request.method == 'POST':
-    #     add_form = GroupAddForm(request.POST)
-    #     if add_form.is_valid():
-    #         addee = User.objects.get(username = add_form.cleaned_data['added_user'])
-    #         group.members.add(addee)
-    # else:
-    #     add_from = GroupAddForm()
-    # context = {
-    #     'group' : group,
-    #     'add_form': add_form
-    # }
-    # return render(request, template_name, context)
 
     
 def join_group(request, group_id):

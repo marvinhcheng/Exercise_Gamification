@@ -47,6 +47,7 @@ class Profile(models.Model):
     points_cardio = models.IntegerField(default=0, null=True)
     points_weight = models.IntegerField(default=0, null=True)
     points_calis = models.IntegerField( default=0, null=True)
+    points_total = models.IntegerField(default=0)
     
     def __str__(self):
         return self.profile.username
