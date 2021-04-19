@@ -28,6 +28,9 @@ urlpatterns = [
     path('groups/<int:group_id>', views.group_detail, name="group_detail"),
     path('groups/<int:group_id>/add/', views.add_to_group, name="add_to_group"),
     path('groups/<int:group_id>/join/', views.join_group),
+    path('groups/<int:group_id>/edit/', views.edit_group.as_view(), name="edit"),
+    path('groups/<int:group_id>/edit/delete_group/', views.delete_group, name="delete_group"),
+
     path('diet/', TemplateView.as_view(template_name="exercising/diet.html")),
     path('diet/keto/', TemplateView.as_view(template_name="exercising/keto.html")),
     path('exercise_tips/', TemplateView.as_view(template_name="exercising/tips.html")),

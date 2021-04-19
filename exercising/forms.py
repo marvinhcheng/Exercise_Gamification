@@ -30,6 +30,11 @@ class GroupForm(forms.ModelForm):
         model = Group
         fields= ['name', 'description', 'private']
 
+class EditGroupForm(forms.ModelForm):
+    class Meta:
+        model = Group
+        fields= ['name', 'description', 'private']
+
 
 class MessageForm(forms.ModelForm):
     class Meta:
