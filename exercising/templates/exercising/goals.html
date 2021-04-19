@@ -54,6 +54,7 @@
 	</nav>
   
     <h2>Goals Logs</h2>
+    {% if user.is_authenticated %}
     <div>
       <h4>Enter your goal</h4>
       <form action="/goals/" method="post">
@@ -73,20 +74,11 @@
         <li>Your progress of {{ item }}: {{ item.get_exercise_amount }}/{{ item.amount }} minutes</li>
         {% endfor %}
       </ul>
-      <!-- <h4>Log of your exercises</h4>
-      {% if logs_list %}
-      <ul>
-        {% for item in logs_list %}
-        <li>
-          On {{ item }} you did {{item.exercise_type}} for {{ item.duration }}
-          hours
-        </li>
-        {% endfor %}
-      </ul>
-      {% else %}
-      <p>No logs available</p>
-      {% endif %} -->
+
     </div>
+    {% else %}
+    <h4>Please Log in First</h4>
+    {% endif %}
 
     <!--FOOTER-->
     <footer class="bg-light text-center text-lg-start">

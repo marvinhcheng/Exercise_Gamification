@@ -48,9 +48,9 @@
         </div>
     </nav>
 
-    <h2>Groups</h2>
+    <h2>Create Group</h2>
+    {% if user.is_authenticated %}
     <div>
-      <h4>Create Group</h4>
       <form action="/groups/create_group/" method="post">
         <div>
           <div class="form-group">{% csrf_token %} {{ group_form }}</div>
@@ -60,6 +60,9 @@
         </div>
       </form>
     </div>
+    {% else %}
+    <h4>Please Log in First</h4>
+    {% endif %}
 
     <!--FOOTER-->
     <footer class="bg-light text-center text-lg-start">
