@@ -64,21 +64,24 @@
     {% endif %}
 
     <h4>Log of your exercises</h4>
-    <ul>
-      {% for item in user.profile.logs.all %}
-      <li>
-        On {{ item }} you did {{item.exercise_type}} for {{ item.duration }}
-        hours
-      </li>
-      {% endfor %}
-    </ul>
+      <ul>
+        {% for item in user.profile.logs.all %}
+        <li>
+          On {{ item }} you did {{item.exercise_type}} for {{ item.amount }}
+          hours
+        </li>
+        {% endfor %}
+      </ul>
 
     <h4>Log of your goals</h4>
-    <ul>
-      {% for item in user.profile.goals.all %}
-      <li>Your progress of {{ item }}: 0/{{ item.duration }} hours</li>
-      {% endfor %}
-    </ul>
+      <ul>
+        {% for item in user.profile.goals.all %}
+        <li>Your progress of {{ item }}: {{ item.get_exercise_hours }}/{{ item.amount }} hours</li>
+        {% endfor %}
+      </ul>
+	  
+	<h4>Your Points: </h4> {{ user.profile.points.get_points }}
+		
     <!--FOOTER-->
     <footer class="bg-light text-center text-lg-start">
       <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2)">

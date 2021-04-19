@@ -71,7 +71,7 @@
       <ul>
         {% for item in user.profile.logs.all %}
         <li>
-          On {{ item }} you did {{item.exercise_type}} for {{ item.duration }}
+          On {{ item }} you did {{item.exercise_type}} for {{ item.amount }}
           hours
         </li>
         {% endfor %}

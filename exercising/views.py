@@ -6,7 +6,7 @@ from django.urls import reverse
 from django.views import generic
 import random
 from django.utils import timezone
-from .models import User, Exercise_Log, Profile, Goal_Log, Group, Message
+from .models import User, Exercise_Log, Profile, Goal_Log, Group, Message, exercises
 from .forms import ExerciseForm, GoalsForm, GroupForm, MessageForm, GroupAddForm
 from django.views.generic import TemplateView
 import spotipy
@@ -32,12 +32,24 @@ def add_exercise(request):
         if form.is_valid():
             new_exercise = Exercise_Log()
             new_exercise.exercise_type = form.cleaned_data['exercise_type']
-            new_exercise.duration = form.cleaned_data['duration']
+            # new_exercise.region_type = form.cleaned_data['region_type']
+            new_exercise.amount = form.cleaned_data['amount']
             new_exercise.date = form.cleaned_data['date']
+            new_exercise.profile = request.user.profile
             new_exercise.save()
+
+            #This code mad me want to punch a hole through my screen
+            if new_exercise.exercise_type[0] == 'CARDIO':
+                request.user.profile.points_cardio += new_exercise.amount*16
+            if new_exercise.exercise_type[0] == 'WEIGHT_TRAINING':
+                request.user.profile.points_weight += new_exercise.amount*30
+            if new_exercise.exercise_type[0] == 'CALISTHENICS':
+                request.user.profile.points_calis += new_exercise.amount*8
 
             request.user.profile.logs.add(new_exercise)
             request.user.save()
+            request.user.profile.save()
+
             return HttpResponseRedirect('/logs/')
     else:
         form = ExerciseForm()
@@ -49,7 +61,9 @@ def add_goal(request):
         if form2.is_valid():
             new_goal = Goal_Log()
             new_goal.exercise_type = form2.cleaned_data['exercise_type']
-            new_goal.duration = form2.cleaned_data['duration']
+            # new_goal.region_type = form.cleaned_data['region_type']
+            new_goal.amount = form2.cleaned_data['amount']
+            new_goal.profile = request.user.profile
             new_goal.save()
 
             request.user.profile.goals.add(new_goal)
@@ -58,6 +72,8 @@ def add_goal(request):
     else:
         form2 = GoalsForm()
     return render(request, 'exercising/goals.html', {'form': form2})
+
+
 
 def map(request):
     mapbox_access_token = 'pk.eyJ1Ijoic2VyaGlpMDQ0IiwiYSI6ImNrbmR0d281ZTBhdXgyem9kdDJnNHdtdmcifQ.8K3hi5bBXp2lZTwOWvbFUA'
@@ -186,12 +202,3 @@ def join_group(request, group_id):
         return redirect('/groups/')
 
     return redirect('/groups/'+str(group_id))
-
-
-
-
-
-
-
-    
-
