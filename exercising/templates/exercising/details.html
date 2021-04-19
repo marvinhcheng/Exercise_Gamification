@@ -44,6 +44,7 @@
 
        <div class = "row">
          <div class = "col">
+          {% if user.is_authenticated %}
           {% if not group.private %}
           <form action="{{group.id}}/add/">
             <button
@@ -55,7 +56,7 @@
               Add User to Group
             </button>
           </form>
-          {% endif %}
+          {% endif %} {% endif %}
           
           {% if group.private and group.owner == request.user%}
           <form action="{{group.id}}/add/">
@@ -73,6 +74,7 @@
          </div>
 
          <div class="col">
+          {% if user.is_authenticated %}
           <form method="post" action="{{group.id}}/join/">
             {% csrf_token %} {% if request.user in group.members.all and request.user != group.owner %}
             <button
@@ -92,7 +94,7 @@
             >
               Join Group
             </button>
-            {% endif %} {% if request.user != group.owner %} {% endif %}
+            {% endif %} {% endif %}
           </form>
 
          </div>
@@ -107,7 +109,7 @@
             >
               Edit Group 
             </button>
-          </form>
+            </form>
           {% endif %}
 
          </div>
