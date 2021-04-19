@@ -204,6 +204,7 @@ def group_detail(request, group_id):
             new_message.pub_date = timezone.localtime()
             new_message.message_id = group_id
             new_message.save()
+            return HttpResponseRedirect('/groups/'+str(group_id))
     else:
         message_form = MessageForm()
     
