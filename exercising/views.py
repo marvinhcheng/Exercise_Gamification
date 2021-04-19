@@ -6,7 +6,7 @@ from django.urls import reverse
 from django.views import generic
 import random
 from django.utils import timezone
-from .models import User, Exercise_Log, Profile, Goal_Log, Group, Message
+from .models import User, Exercise_Log, Profile, Goal_Log, Group, Message, exercises
 from .forms import ExerciseForm, GoalsForm, GroupForm, MessageForm, GroupAddForm
 from django.views.generic import TemplateView
 import spotipy
@@ -38,10 +38,17 @@ def add_exercise(request):
             new_exercise.profile = request.user.profile
             new_exercise.save()
 
-            request.user.profile.add_points(new_exercise) 
+            #This code mad me want to punch a hole through my screen
+            if new_exercise.exercise_type[0] == 'CARDIO':
+                request.user.profile.points_cardio += new_exercise.amount*16
+            if new_exercise.exercise_type[0] == 'WEIGHT_TRAINING':
+                request.user.profile.points_weight += new_exercise.amount*30
+            if new_exercise.exercise_type[0] == 'CALISTHENICS':
+                request.user.profile.points_calis += new_exercise.amount*8
 
             request.user.profile.logs.add(new_exercise)
             request.user.save()
+            request.user.profile.save()
 
             return HttpResponseRedirect('/logs/')
     else:
@@ -65,15 +72,6 @@ def add_goal(request):
     else:
         form2 = GoalsForm()
     return render(request, 'exercising/goals.html', {'form': form2})
-
-def add_points(request, ex): 
-    if ex.exercise_type == "Cardio":
-        request.user.profile.points_cardio += ex.amount*16
-    if ex.exercise_type == "Weight Training":
-        request.user.profile.points_weight += ex.amount*30
-    if ex.exercise_type == "Calisthenics":
-        request.user.profile.points_calis += ex.amount*8
-    request.user.profile.save()
 
 
 

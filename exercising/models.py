@@ -44,9 +44,9 @@ exercises = (
 
 class Profile(models.Model):
     profile = models.OneToOneField(User, related_name='profile', on_delete=models.CASCADE, primary_key=True)
-    points_cardio = models.IntegerField(max_length=9, default=0)
-    points_weight = models.IntegerField(max_length=9, default=0)
-    points_calis = models.IntegerField(max_length=9, default=0)
+    points_cardio = models.IntegerField(max_length=9, default=0, null=True)
+    points_weight = models.IntegerField(max_length=9, default=0, null=True)
+    points_calis = models.IntegerField(max_length=9, default=0, null=True)
     
     def __str__(self):
         return self.profile.username
