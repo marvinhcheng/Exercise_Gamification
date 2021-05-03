@@ -1,4 +1,7 @@
 <!DOCTYPE html>
+{% load socialaccount %}
+{% load crispy_forms_tags %}
+{% load static %}
 <html>
   <head>
     <!-- Required meta tags -->
@@ -12,6 +15,7 @@
       integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl"
       crossorigin="anonymous"
     />
+    <link rel="stylesheet" href="{% static 'exercising/style.css' %}">
   </head>
   <body>
     <!--
@@ -49,44 +53,59 @@
 					<li class="nav-item">
 						<a class="nav-link" href="/exercise_tips/">Exercise Tips</a>
 					</li>
+          <li class="nav-item">
+            <a class="nav-link" href="logout/">Logout</a>
+          </li>
 				</ul>
 			</div>
 	</nav>
   
-    <h2>Goals Logs</h2>
+
     {% if user.is_authenticated %}
-    <div>
-      <h4>Enter your goal</h4>
-      <form action="/goals/" method="post">
-        <div>
-          <div class="form-group">{% csrf_token %} {{ form }}</div>
-          <div class="button">
-            <!-- <input type="submit" value="Submit" /> -->
-            <button type="submit" class="btn btn-primary">Submit</button>
+    <h1 class = "m-5">Your Goals</h1>
+    <div class="container">
+      <div class="row">
+        <div class="col">
+          <h4>Enter a new goal</h4>
+          <form action="/goals/" method="post">
+            <div>
+              <div class="form-group">{% csrf_token %} {{ form|crispy }}</div>
+              <div class="button">
+                <!-- <input type="submit" value="Submit" /> -->
+                <button type="submit" class="btn btn-primary">Submit</button>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="col">
+          <div>
+            <h4>Your Goals</h4>
+            <ul class = "list-group">
+              {% for item in user.profile.goals.all %}
+              <li class = "list-group-item">
+                <div class="container">
+                  <div class="row">
+                    Your progress of {{ item }}: {{ item.get_exercise_amount }}/{{ item.amount }} minutes
+                  </div>
+                  <div class="row">
+                    Goal set on {{ item.date }}
+                  </div>
+                </div>
+              </li>
+              {% endfor %}
+            </ul>
           </div>
         </div>
-      </form>
-    </div>
-    <div>
-      <h4>Log of your goals</h4>
-      <ul>
-        {% for item in user.profile.goals.all %}
-        <li>Your progress of {{ item }}: {{ item.get_exercise_amount }}/{{ item.amount }} minutes</li>
-        {% endfor %}
-      </ul>
-
+      </div>
     </div>
     {% else %}
-    <h4>Please Log in First</h4>
+    <h3 class= "mt-5" style="text-align: center;">Please Log in First</h3>
+    <a href="{% provider_login_url 'google' %}">Login with Google</a>
     {% endif %}
 
-    <!--FOOTER-->
-    <footer class="bg-light text-center text-lg-start">
-      <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2)">
-        A-03
-      </div>
-    </footer>
 
+
+    
     <script
       src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.6.0/dist/umd/popper.min.js"
       integrity="sha384-KsvD1yqQ1/1+IA7gi3P0tyJcT3vR+NdBTt13hSJ2lnve8agRGXTTyNaBYmCR/Nwi"
@@ -98,4 +117,10 @@
       crossorigin="anonymous"
     ></script>
   </body>
+  <!--FOOTER-->
+  <footer class="bg-light text-center text-lg-start">
+    <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2)">
+      A-03
+    </div>
+  </footer>
 </html>

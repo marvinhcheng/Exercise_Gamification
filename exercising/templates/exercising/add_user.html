@@ -17,16 +17,17 @@
 
 
 <h2>Enter the Username of the User you want to add</h2>
-<form action="/groups/{{group.id}}">
+
   <button
     type="submit"
     class="btn btn-primary"
     value="join group"
     style="height: 60px; width: 100px"
+    onclick="history.back()"
   >
   &laquo; Go back
   </button>
-</form>
+
 <div>  
   <form method="post">
     {% csrf_token %}

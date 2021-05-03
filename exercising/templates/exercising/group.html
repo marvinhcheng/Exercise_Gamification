@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+{% load static %}
 <html>
   <head>
     <!-- Required meta tags -->
@@ -13,6 +14,7 @@
       crossorigin="anonymous"
     />
   </head>
+  <link rel="stylesheet" href="{% static 'exercising/style.css' %}">
   <body>
     <!--
 		Title: Navigation bar Bootstrap
@@ -49,64 +51,73 @@
 					<li class="nav-item">
 						<a class="nav-link" href="/exercise_tips/">Exercise Tips</a>
 					</li>
+          <li class="nav-item">
+            <a class="nav-link" href="logout/">Logout</a>
+          </li>
 				</ul>
 			</div>
 	</nav>
 
-    <h2>Groups</h2>
-    <div>
-      <li>
-        <a href="/groups/create_group/">Make a group</a>
-      </li>
-    </div>
-    <div>
-      <h3>Groups I own</h3>
-      {% for group in group_list %} {% if group.owner == request.user %}
-      <li>
-        <a href="{{ group.id }}">{{ group }} </a>
-        {% if group.private %} (private) {% else %} (public) {% endif %}
-      </li>
-      {% endif %} {% endfor %}
-    </div>
+    <h1 class = "m-5">Groups</h1>
 
-    <div>
-      <h4>My Private Groups</h4>
-      {% for group in group_list %} {% if request.user in group.members.all and request.user != group.owner %}
-      {% if group.private %}
-
-      <li>
-        <a href="{{ group.id }}">{{ group }}</a>
-      </li>
-      {% endif %} {% endif %} {% endfor %}
-    </div>
-    <div>
-      <h4>My Public Groups</h4>
-      {% for group in group_list %} {% if request.user in group.members.all and request.user != group.owner %}
-      {% if not group.private %}
-
-      <li>
-        <a href="{{ group.id }}">{{ group }}</a>
-      </li>
-      {% endif %} {% endif %} {% endfor %}
-    </div>
-    <div>
-      <h4>Explore Public Groups</h4>
-      {% for group in group_list %} {% if group.owner != request.user and not group.private%}
-      {% if request.user not in group.members.all %}
-      <li>
-        <a href="{{ group.id }}">{{ group }}</a>
-      </li>
-      {% endif %} {% endif %} {% endfor %}
+    <div class="container">
+      <div class="row">
+        <div class="col">
+          <div>
+            <h3>Groups You Own</h3>
+            <a href="/groups/create_group/">Create a new group</a>
+            <ul class="list-group">
+              {% for group in group_list %} {% if group.owner == request.user %}
+              <li class = "list-group-item">
+                <a href="{{ group.id }}">{{ group }} </a>
+                {% if group.private %} (private) {% else %} (public) {% endif %}
+              </li>
+              {% endif %} {% endfor %}
+            </ul>
+          </div>
+      
+          <div>
+            <h3>Private Groups You're In</h3>
+            <ul class="list-group">
+              {% for group in group_list %} {% if request.user in group.members.all and request.user != group.owner %}
+              {% if group.private %}
+              <li class="list-group-item">
+                <a href="{{ group.id }}">{{ group }}</a>
+              </li>
+              {% endif %} {% endif %} {% endfor %}
+            </ul>
+          </div>
+          <div>
+            <h3>Public Groups You'be Joined</h3>
+            <ul class="list-group">
+              {% for group in group_list %} {% if request.user in group.members.all and request.user != group.owner %}
+              {% if not group.private %}
+        
+              <li class="list-group-item">
+                <a href="{{ group.id }}">{{ group }}</a>
+              </li>
+              {% endif %} {% endif %} {% endfor %}
+            </ul> 
+          </div>
+        </div>
+        <div class="col">
+          <div>
+            <h3 style="text-align: center;">Explore Public Groups</h3>
+            <ul class="list-group">
+              {% for group in group_list %} {% if group.owner != request.user and not group.private%}
+              {% if request.user not in group.members.all %}
+              <li class="list-group-item" style="text-align: center;">
+                <a href="{{ group.id }}">{{ group }}</a>
+              </li>
+              {% endif %} {% endif %} {% endfor %}
+            </ul>
+          </div>
+        </div>
+      </div>
     </div>
     
 
-    <!--FOOTER-->
-    <footer class="bg-light text-center text-lg-start">
-      <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2)">
-        A-03
-      </div>
-    </footer>
-
+    
     <script
       src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.6.0/dist/umd/popper.min.js"
       integrity="sha384-KsvD1yqQ1/1+IA7gi3P0tyJcT3vR+NdBTt13hSJ2lnve8agRGXTTyNaBYmCR/Nwi"
@@ -118,4 +129,10 @@
       crossorigin="anonymous"
     ></script>
   </body>
+  <!--FOOTER-->
+  <footer class="bg-light text-center text-lg-start">
+    <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2)">
+      A-03
+    </div>
+  </footer>
 </html>

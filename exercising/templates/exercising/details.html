@@ -123,7 +123,7 @@
           <div class="card-body" style="border:solid">
             <h3>Group Members</h3>
             {% for member in group.members.all %} 
-            <ul>{{ member }}</ul>
+            <ul>{{ member }} - {{ member.profile.points_total }} Total Points</ul>
             {% endfor %}
           </div>
 
