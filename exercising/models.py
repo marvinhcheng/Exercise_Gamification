@@ -82,7 +82,24 @@ class Goal_Log(models.Model):
                 # else: 
                 #     if log.region_type == self.region_type:
                 #         total += log.amount
+        if total >= self.amount:
+            return self.amount
         return total
+    
+    def get_progress(self):
+        # progress = self.amount
+        # return progress
+        total = 0
+        for log in Exercise_Log.objects.filter(profile=self.profile, exercise_type=self.exercise_type):
+            if log.date >= self.date:
+                # if log.region_type == "Any":
+                total += log.amount
+                # else: 
+                #     if log.region_type == self.region_type:
+                #         total += log.amount
+        if total >= self.amount:
+            return 100
+        return total / self.amount * 100
 
 
 class Group(models.Model):
