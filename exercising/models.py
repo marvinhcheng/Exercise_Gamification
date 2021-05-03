@@ -85,30 +85,6 @@ class Goal_Log(models.Model):
         return total
 
 
-#class Points(models.Model):
-#    amount = models.DecimalField(max_digits=10, decimal_places=5, default=0.0)
-#    profile = models.OneToOneField(Profile, null=True, related_name='points', on_delete=models.CASCADE)
-
-#    def get_points(self):
-#        total = 0
-#        for log in Exercise_Log.objects.all():
-#            total += log.amount
-
-#        self.amount = total
-#        return total
-
-
-# class Message(models.Model):
-#     description = models.TextField()
-#     pub_date = models.DateTimeField(auto_now_add=True)
-#     author = models.CharField(max_length=200, null=False, default="no author")
-
-#     class Meta:
-#         ordering = ['pub_date']
-
-#     def __str__(self):
-#         return 'Comment {} by {}'.format(self.description, self.author)
-
 class Group(models.Model):
     name = models.CharField(max_length=200, null=True)
     description = models.CharField(max_length=200, null=True)
@@ -117,7 +93,6 @@ class Group(models.Model):
     owner = models.ForeignKey(User, related_name="owner", on_delete = models.CASCADE)
     email = models.EmailField(max_length=200, null=True)
     private = models.BooleanField(default = False, null=False)
-    # messages = models.ManyToManyField(Message, blank=True)
 
 
     def __str__(self):
