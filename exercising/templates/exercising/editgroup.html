@@ -1,5 +1,7 @@
 <!DOCTYPE html>
 <html>
+  {% load static %}
+  {% load crispy_forms_tags %}
   <head>
     <!-- Required meta tags -->
     <meta charset="utf-8" />
@@ -12,6 +14,7 @@
       integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl"
       crossorigin="anonymous"
     />
+    <link rel="stylesheet" href="{% static 'exercising/style.css' %}">
   </head>
   <body>
     <!--
@@ -20,50 +23,7 @@
 		Url: https://getbootstrap.com/docs/4.0/components/navbar/
 		-->
 
-    <h2>Edit Group: {{ group }}</h2>
     <form action="/groups/{{group.id}}">
-        <button
-          type="submit"
-          class="btn btn-primary"
-          value="join group"
-          style="height: 60px; width: 100px"
-        >
-        &laquo; Go back
-        </button>
-    </form>
-    <br>
-    <br>
-    <div>
-      <form action="" method="post">
-        <div class = "row">
-            <div class = "col">
-                <div class="form-group">{% csrf_token %} {{ edit_form }}</div>
-            </div>
-            <div class = "col">
-                <div class="button">
-                    <button type="submit" class="btn btn-primary" style="height: 60px; width: 150px">Submit Edits</button>
-                  </div>
-            </div>
-        </div>
-      </form>
-    </div>
-
-
-    <!-- <a href = "./delete_group/"> Delete</a> -->
-    <form method="post" action="./delete_group/">
-        {% csrf_token %}
-        <button
-            type="submit"
-            class="btn btn-danger"
-            value="delete group"
-            style="height: 70px; width: 100px"
-        >
-            Delete Group
-        </button>
-    </form>
-
-    <h2>Enter the Username of the User you want to remove</h2>
-    <!-- <form action="./remove/">
       <button
         type="submit"
         class="btn btn-primary"
@@ -72,17 +32,58 @@
       >
       &laquo; Go back
       </button>
-    </form> -->
-    <div>  
+    </form>
+
+    <h2 style="color: white; text-align: center; padding-top: 5%">Edit Group: {{ group }}</h2>
+    
+    <br>
+    <br>
+    <div class="container" style=" padding-right: 5%; padding-left: 5%; font-size: large;">
+      <form action="" method="post" style="color:white">
+        <div class="form-group" style="width: 100%;">{% csrf_token %} {{ edit_form|crispy }}</div>
+
+        <div class="button">
+            <button type="submit" class="btn btn-primary" style="height: 60px; width: 150px">Submit Edits</button>
+          </div>
+      </form>
+    </div>
+
+
+    <h2 style="color: white; text-align: center; padding-top: 5%">Enter the Username of the User you want to remove</h2>
+
+    <div class = "container" style="text-align: center; padding-right: 5%; padding-left: 5%;">  
       <form method="post" action ="./remove/">
         {% csrf_token %}
         <div class = "form-group">
-          <textarea name="added_user"></textarea>
+          <textarea name="added_user" style="width: 100%;"></textarea>
         </div>
         <input type="submit" class="btn btn-success" value="Remove User From Group" margin-top="15px">
       </form>
     </div>
 
+
+    <div style="color: white; text-align: center; padding-top: 5%">
+      <h2>Delete This Group</h2>
+      <div class="subheading">WARNING: This is permanent</div>
+    </div>
+
+
+    <div class="container" style="text-align: center;">
+      <form method="post" action="./delete_group/">
+        {% csrf_token %}
+        <button
+            type="submit"
+            class="btn btn-danger"
+            value="delete group"
+            style="height: 70px; width: 30%"
+        >
+            Delete Group
+        </button>
+      </form>
+    </div>
+    <div class="container" style="height: 200px;">
+
+    </div>
 
     <!--FOOTER-->
     <footer class="bg-light text-center text-lg-start">
