@@ -83,9 +83,19 @@
           <li class="list-group-item">{{ user.profile.points_total}}</li>
           <br>
           <h4>Your goals</h4>
-          <a href="/logs/" style="color: white;">Set another goal to hit</a>
+          <!-- <a href="/logs/" style="color: white;">Set another goal to hit</a> -->
+          <form action="/goals/">
+            <button
+              type="submit"
+              class="btn btn-primary"
+              value="join group"
+              style="height: 40px; width: 200px"
+            >
+            Set another goal to hit
+            </button>
+          </form>
           <ul class="list-group">
-            {% for item in user.profile.goals.all %}
+            {% for item in user.profile.goals.all reversed%}
             <li class="list-group-item">
               <div class="container">
                 <div class="row">
@@ -101,9 +111,18 @@
         </div>
         <div class="col">
           <h4>Log of your exercises</h4>
-          <a href="/logs/" style="color: white;">Add an exercise to your log</a>
+          <!-- <a href="/logs/" style="color: white;">Add an exercise to your log</a> -->
+          <form action="/logs/">
+            <button
+              type="submit"
+              class="btn btn-primary"
+              value="join group"
+              style="height: 40px; width: 200px"
+            >
+            Add an exercise to your log
+            </button>
           <ul class="list-group">
-            {% for item in user.profile.logs.all %}
+            {% for item in user.profile.logs.all reversed %}
             <li class="list-group-item">
               On {{ item }} you did {{item.exercise_type}} for {{ item.amount }}
               minutes

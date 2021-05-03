@@ -1,5 +1,8 @@
 <!DOCTYPE html>
+{% load crispy_forms_tags %}
+{% load static %}
 <html>
+  
   <head>
     <!-- Required meta tags -->
     <meta charset="utf-8" />
@@ -12,6 +15,7 @@
       integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl"
       crossorigin="anonymous"
     />
+    <link rel="stylesheet" href="{% static 'exercising/style.css' %}">
   </head>
   <body>
     <!--
@@ -51,12 +55,12 @@
         </div>
     </nav>
 
-    <h2>Create Group</h2>
+    <h2 style="color: white; text-align: center; padding-top: 5%">Create Group</h2>
     {% if user.is_authenticated %}
-    <div>
+    <div class="container" style=" padding-right: 5%; padding-left: 5%; font-size: large; color: white;">
       <form action="/groups/create_group/" method="post">
         <div>
-          <div class="form-group">{% csrf_token %} {{ group_form }}</div>
+          <div class="form-group">{% csrf_token %} {{ group_form|crispy }}</div>
           <div class="button">
             <button type="submit" class="btn btn-primary">Submit</button>
           </div>
@@ -67,13 +71,11 @@
     <h4>Please Log in First</h4>
     {% endif %}
 
-    <!--FOOTER-->
-    <footer class="bg-light text-center text-lg-start">
-      <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2)">
-        A-03
-      </div>
-    </footer>
+    <div class="container" style="height: 200px;">
 
+    </div>
+
+    
     <script
       src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.6.0/dist/umd/popper.min.js"
       integrity="sha384-KsvD1yqQ1/1+IA7gi3P0tyJcT3vR+NdBTt13hSJ2lnve8agRGXTTyNaBYmCR/Nwi"
@@ -85,4 +87,10 @@
       crossorigin="anonymous"
     ></script>
   </body>
+  <!--FOOTER-->
+  <footer class="bg-light text-center text-lg-start">
+    <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2)">
+      A-03
+    </div>
+  </footer>
 </html>

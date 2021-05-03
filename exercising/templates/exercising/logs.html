@@ -80,7 +80,7 @@
           <div>
             <h4>Log of your exercises</h4>
             <ul class = "list-group overflow-auto">
-              {% for item in user.profile.logs.all %}
+              {% for item in user.profile.logs.all reversed %}
               <li class = "list-group-item">
                 On {{ item }} you did {{item.exercise_type}} for {{ item.amount }}
                 minutes
