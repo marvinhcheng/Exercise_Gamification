@@ -69,7 +69,7 @@
           <h4>Enter a new goal</h4>
           <form action="/goals/" method="post">
             <div>
-              <div class="form-group">{% csrf_token %} {{ form|crispy }}</div>
+              <div class="form-group" style="color: white;">{% csrf_token %} {{ form|crispy }}</div>
               <div class="button">
                 <!-- <input type="submit" value="Submit" /> -->
                 <button type="submit" class="btn btn-primary">Submit</button>
@@ -102,6 +102,9 @@
     <h3 class= "mt-5" style="text-align: center;">Please Log in First</h3>
     <a href="{% provider_login_url 'google' %}">Login with Google</a>
     {% endif %}
+    <div class="container" style="height: 200px;">
+
+    </div>
 
 
 
