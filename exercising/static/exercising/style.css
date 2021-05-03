@@ -28,7 +28,21 @@ body {
     background-color: #34568b !important;
 }
 
-.list-group-item {
+
+/* .list-group-item {
+    border: double;
+    font-size: small;
+}
+
+.list-group {
+    font-size: small;
+} */
+
+.container {
+    font-size: small;
+}
+
+.container.list-group-item {
     border: double;
 }
 
