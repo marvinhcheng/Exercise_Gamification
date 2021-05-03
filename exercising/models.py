@@ -99,7 +99,7 @@ class Goal_Log(models.Model):
                 #         total += log.amount
         if total >= self.amount:
             return 100
-        return total / self.amount * 100
+        return round((total / self.amount * 100),2)
 
 
 class Group(models.Model):
