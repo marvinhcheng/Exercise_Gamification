@@ -69,7 +69,7 @@
       <div class="row">
         <div class = "col">
           <h4>Your Points:</h4>
-          <p>
+          <p style="color: white;">
             These are your points for the three exercise categories. Points for each category are calculated differently. 
             For every minute of cardio, you earn 16 points. For every minute of weight training you will earn 30 points. 
             For every minute doing calisthenics you will earn 8 points.
@@ -83,7 +83,7 @@
           <li class="list-group-item">{{ user.profile.points_total}}</li>
           <br>
           <h4>Your goals</h4>
-          <a href="/logs/">Set another goal to hit</a>
+          <a href="/logs/" style="color: white;">Set another goal to hit</a>
           <ul class="list-group">
             {% for item in user.profile.goals.all %}
             <li class="list-group-item">
@@ -101,7 +101,7 @@
         </div>
         <div class="col">
           <h4>Log of your exercises</h4>
-          <a href="/logs/">Add an exercise to your log</a>
+          <a href="/logs/" style="color: white;">Add an exercise to your log</a>
           <ul class="list-group">
             {% for item in user.profile.logs.all %}
             <li class="list-group-item">

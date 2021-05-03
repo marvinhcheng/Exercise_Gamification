@@ -65,8 +65,8 @@
         <div class="col">
           <div>
             <h3>Groups You Own</h3>
-            <a href="/groups/create_group/">Create a new group</a>
-            <ul class="list-group">
+            <a href="/groups/create_group/" style="color: white;">Create a new group</a>
+            <ul class="list-group" style=" padding-top: 15px;">
               {% for group in group_list %} {% if group.owner == request.user %}
               <li class = "list-group-item">
                 <a href="{{ group.id }}">{{ group }} </a>

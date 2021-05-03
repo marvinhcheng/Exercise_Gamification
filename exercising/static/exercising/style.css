@@ -10,12 +10,27 @@ html {
 
 h1 {
     text-align: center;
+    color: white;
+}
+
+h4 {
+    color: white;
+    padding-top: 20px;
+}
+
+h3 {
+    color: white;
+    padding-top: 20px;
 }
 
 body {
-    margin-bottom: 0% !important;
+    margin-bottom: 10% !important;
+    background-color: #34568b !important;
 }
 
+.list-group-item {
+    border: double;
+}
 
 footer {
     position: fixed;
