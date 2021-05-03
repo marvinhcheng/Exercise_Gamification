@@ -1,0 +1,25 @@
+{
+    "persons": [
+        {
+            "firstname": "Tom",
+            "lastname": "Michielsen",
+            "about": {
+                "gender": "Male",
+                "date_of_birth": "Dec 22, 1975",
+                "nationality": [
+                    "Belgian",
+                    "Dutch"
+                ],
+                "ethnic_origin": "European",
+                "spoken_languages": [
+                    "Dutch"
+                ],
+                "crime": [
+                    "Illicit trafficking in narcotic drugs and psychotropic substances"
+                ],
+                "state_of_case": "Sentenced to 4,5 years of prison"
+            },
+            "other": {}
+        }
+    ]
+}

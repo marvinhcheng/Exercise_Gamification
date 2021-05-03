@@ -133,22 +133,6 @@ class CreateGroup(TemplateView):
         group_form = GroupForm()
         return render(request, self.template_name, {'group_form': group_form})
 
-# def edit_group(request, group_id):
-#     template_name = 'exercising/editgroup.html'
-#     # group = Group.objects.get(id=group_id)
-#     if request.method == "POST":
-#         edit_form = EditGroupForm(request.POST)
-#         if edit_form.is_valid():
-#             group = edit_form.save(commit=False)
-#             group.owner = request.user
-#             # group.pub_date = group.pub_date
-#             group.pub_date = timezone.localtime()
-#             group.email = request.user.email
-#             edit_form.save()
-#             return HttpResponseRedirect('/groups/'+str(group_id))
-#     else:
-#         edit_form = EditGroupForm()
-#     return render(request, template_name, {'edit_form': edit_form})
 
 class edit_group(TemplateView):
     template_name = 'exercising/editgroup.html'
