@@ -30,15 +30,6 @@ body {
 }
 
 
-/* .list-group-item {
-    border: double;
-    font-size: small;
-}
-
-.list-group {
-    font-size: small;
-} */
-
 .container {
     font-size: small;
 }
@@ -54,4 +45,20 @@ footer {
     height: 4.5rem; /* Footer height */
 
   }
+
+  #google_login {
+      text-align: center;
+      margin-top: 15%;
+      color: white;
+           
+  }
+
+  #google_img {
+      border-radius: 20px;
+  }
+
+  #goal_bar {
+      border-radius: 25px;
+  }
+  
 

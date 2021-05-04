@@ -92,8 +92,10 @@
       </div>
     </div>
     {% else %}
-    <h3 class= "mt-5" style="text-align: center;">Please Log in First</h3>
-    <a href="{% provider_login_url 'google' %}">Login with Google</a>
+    <div id="google_login"> 
+      <h3 classs= "m-5">Please log in</h2>
+      <a href="{% provider_login_url 'google' %}"><input type="image" src="{% static 'exercising/google_login.png' %}"/></a>
+    </div>
     {% endif %}
     <div class="container" style="height: 200px;">
 
