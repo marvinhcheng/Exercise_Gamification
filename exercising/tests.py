@@ -6,15 +6,15 @@ from exercising.models import Exercise_Log
 from exercising.forms import ExerciseForm
 
 # Create your tests here.
-class LogInTest(TestCase):
-    def setUp(self):
-        self.credentials = {
-            'username': 'mhc9yq',
-            'password': 'B0ttle123!'}
-        User.objects.create_user(**self.credentials)
-    def test_login(self):
-        response = self.client.post('/login/', self.credentials, follow=True)
-        self.assertTrue(response.context['user'].is_authenticated)
+# class LogInTest(TestCase):
+#     def setUp(self):
+#         self.credentials = {
+#             'username': 'bsa2up',
+#             'password': 'b04E20n01'}
+#         User.objects.create_user(**self.credentials)
+#     def test_login(self):
+#         response = self.client.post('/login/', self.credentials, follow=True)
+#         self.assertTrue(response.context['user'].is_authenticated)
 
 class logsTest(TestCase):
     # def test_form_post(self):
