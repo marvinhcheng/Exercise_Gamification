@@ -2,6 +2,8 @@
 {% load socialaccount %}
 {% load crispy_forms_tags %}
 {% load static %}
+
+     
 <html>
   <head>
     <!-- Required meta tags -->
@@ -90,9 +92,21 @@
                   <div class="row">
                     Goal set on {{ item.date }}
                   </div>
-                  <div style="height: 20px; background-color: red; width: {{ item.get_progress }}%">
-                    <span style="color: white;">{{ item.get_progress }}%</span>
+                  {% if item.get_progress < 50 %}
+                  <div style="height: 20px; background-color: red; width: {{ item.get_progress }}%" id="goal_bar" >
+                    <span style="color: white; margin-left: 15px;">{{ item.get_progress }}%</span>
                   </div>
+                  {% endif %}
+                  {% if item.get_progress >= 50 and item.get_progress != 100%}
+                  <div style="height: 20px; background-color: blue; width: {{ item.get_progress }}%" id="goal_bar" >
+                    <span style="color: white; margin-left: 15px;">{{ item.get_progress }}%</span>
+                  </div>
+                  {% endif %}
+                  {% if item.get_progress == 100 %}
+                  <div style="height: 20px; background-color: green; width: {{ item.get_progress }}%" id="goal_bar" >
+                    <span style="color: white; margin-left: 15px;">{{ item.get_progress }}% COMPLETED</span>
+                  </div>
+                  {% endif %}
                 </div>
               </li>
               {% endfor %}
