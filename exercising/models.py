@@ -52,6 +52,23 @@ class Profile(models.Model):
     def __str__(self):
         return self.profile.username
 
+    def get_total_level(self):
+        return int((self.points_total/1000)+1)
+
+    def get_cardio_level(self):
+        return int((self.points_cardio/1000)+1)
+
+    def get_weight_level(self):
+        return int((self.points_weight/1000)+1)
+    
+    def get_calis_level(self):
+        return int((self.points_calis/1000)+1)
+
+    def get_points_left(self):
+        return 1000 - int(self.points_total % 1000)
+
+    def get_level_progress(self):
+        return round(((1000 - int(self.points_total % 1000))/ 1000 * 100),2)
 
 class Exercise_Log(models.Model):
     exercise_type = models.CharField(max_length = 20, choices=exercises, default='Cardio')
@@ -59,6 +76,14 @@ class Exercise_Log(models.Model):
     amount = models.IntegerField(default=0)
     date = models.DateField(default=datetime.date.today)
     profile = models.ForeignKey(Profile, null=True, related_name='logs', on_delete=models.CASCADE)
+
+    def get_points(self):
+        if(self.exercise_type[4] == 'R'):
+            return self.amount * 16
+        elif(self.exercise_type[4] == 'L'):
+            return self.amount * 8
+        elif(self.exercise_type[4] == "I"):
+            return self.amount * 30
 
     def __str__(self):
         return str(self.date)

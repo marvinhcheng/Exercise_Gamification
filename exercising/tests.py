@@ -78,5 +78,3 @@ class logsTest(TestCase):
 
         form = ExerciseForm(data = form_data)
         self.assertFalse(form.is_valid())
-
-
