@@ -67,8 +67,26 @@ class Profile(models.Model):
     def get_points_left(self):
         return 1000 - int(self.points_total % 1000)
 
+    def get_cardio_left(self):
+        return 1000 - int(self.points_cardio % 1000)
+        
+    def get_weight_left(self):
+        return 1000 - int(self.points_weight % 1000)
+    
+    def get_calis_left(self):
+        return 1000 - int(self.points_calis % 1000)
+
     def get_level_progress(self):
-        return round(((1000 - int(self.points_total % 1000))/ 1000 * 100),2)
+        return 100 - round(((1000 - int(self.points_total % 1000))/ 1000 * 100),2)
+    
+    def get_cardio_progress(self):
+        return 100 - round(((1000 - int(self.points_cardio % 1000))/ 1000 * 100),2)
+    
+    def get_weight_progress(self):
+        return 100 -round(((1000 - int(self.points_weight % 1000))/ 1000 * 100),2)
+    
+    def get_calis_progress(self):
+        return 100 -round(((1000 - int(self.points_calis % 1000))/ 1000 * 100),2)
 
 class Exercise_Log(models.Model):
     exercise_type = models.CharField(max_length = 20, choices=exercises, default='Cardio')
