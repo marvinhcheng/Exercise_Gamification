@@ -4,7 +4,7 @@
 <html>
   <head>
     <!-- Required meta tags -->
-    <title>Google Registration</title>
+    <title>Leaderboards</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
@@ -64,89 +64,26 @@
   
 
     {% if user.is_authenticated %}
-    <h1 class="m-5">Welcome {{ user.username }}!</h1>
-
-
     <div class = "container">
       <div class="row">
         <div class = "col">
-          <h4>Your Points:</h4>
-          <p  style="color: white; font-size: small;">
-            These are your points for the three exercise categories. Points for each category are calculated differently. 
-            For every minute of cardio, you earn 16 points. For every minute of weight training you will earn 30 points. 
-            For every minute doing calisthenics you will earn 8 points.
-          </p>
-          <ul class = "list-group" style="font-size: small;">
-            <li class = "list-group-item">Cardio Points: {{ user.profile.points_cardio }}</li>
-            <li class = "list-group-item">Weight Training Points: {{ user.profile.points_weight }}</li>
-            <li class = "list-group-item">Calisthenics Points: {{ user.profile.points_calis }}</li>
-          </ul>
-          <h4>Total Points</h4>
-          <li class="list-group-item">{{ user.profile.points_total }}</li>
-          <br>
-          <h4>Your goals</h4>
-          <!-- <a href="/logs/" style="color: white;">Set another goal to hit</a> -->
-          <form action="/goals/">
-            <button
-              type="submit"
-              class="btn btn-primary"
-              value="join group"
-              style="height: 40px; width: 300px"
-            >
-            Set another goal to hit
-            </button>
-          </form>
-          <ul class="list-group">
-            {% for item in user.profile.goals.all reversed%}
-            <li class="list-group-item">
-              <div class="container">
-                <div class="row">
-                  Your progress of {{ item }}: {{ item.get_exercise_amount }}/{{ item.amount }} minutes
-                </div>
-                <div class="row">
-                  Goal set on {{ item.date }}
-                </div>
-                {% if item.get_progress < 50 %}
-                  <div style="height: 20px; background-color: red; width: {{ item.get_progress }}%" id="goal_bar" >
-                    <span style="color: white; margin-left: 15px;">{{ item.get_progress }}%</span>
-                  </div>
-                  {% endif %}
-                  {% if item.get_progress >= 50 and item.get_progress != 100 %}
-                  <div style="height: 20px; background-color: blue; width: {{ item.get_progress }}%" id="goal_bar" >
-                    <span style="color: white; margin-left: 15px;">{{ item.get_progress }}%</span>
-                  </div>
-                  {% endif %}
-                  {% if item.get_progress == 100 %}
-                  <div style="height: 20px; background-color: green; width: {{ item.get_progress }}%" id="goal_bar" >
-                    <span style="color: white; margin-left: 15px;">{{ item.get_progress }}%   COMPLETED</span>
-                  </div>
-                  {% endif %}
-              </div>
-            </li>
-            {% endfor %}
-          </ul>
+            <h4>Overall Leaderboard</h4>
+            <ul class="list-group">
+              {% for item in User.objects.all %}
+              <li class="list-group-item">
+                {{ item.username }}
+              </li>
+              {% endfor %}
+            </ul>
+            <h4></h4>
+            <ul class="list-group"></div>
         </div>
-        <div class="col">
-          <h4>Log of your exercises</h4>
-          <!-- <a href="/logs/" style="color: white;">Add an exercise to your log</a> -->
-          <form action="/logs/">
-            <button
-              type="submit"
-              class="btn btn-primary"
-              value="join group"
-              style="height: 40px; width: 300px"
-            >
-            Add an exercise to your log
-            </button>
-          <ul class="list-group">
-            {% for item in user.profile.logs.all reversed %}
-            <li class="list-group-item">
-              On {{ item }} you did {{item.exercise_type}} for {{ item.amount }}
-              minutes
-            </li>
-            {% endfor %}
-          </ul>
+        <div class = "col">
+            <h4></h4>
+            <ul class="list-group"></div>
 
+            <h4></h4>
+            <ul class="list-group"></div>
         </div>
       </div>
     </div>

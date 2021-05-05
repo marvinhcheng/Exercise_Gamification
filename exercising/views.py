@@ -27,6 +27,28 @@ class LogsListView(generic.ListView):
     # #     return Profile.logs.objects.order_by('-logs.date')
     #     return Profile.logs.objects.all()
 
+def instantiate_points(request):
+    if request.user.profile.points_cardio == None:
+        request.user.profile.points_cardio = 0
+    if request.user.profile.points_weight == None:
+        request.user.profile.points_weight = 0
+    if request.user.profile.points_calis == None:
+        request.user.profile.points_calis = 0
+    if request.user.profile.points_total == None:
+        request.user.profile.points_total == 0
+
+def calculate_points(request, exercise_type):
+    #This code mad me want to punch a hole through my screen
+        if exercise_type == 'CARDIO':
+            request.user.profile.points_cardio += new_exercise.amount*16
+            request.user.profile.points_total += new_exercise.amount*16
+        if exercise_type == 'WEIGHT_TRAINING':
+            request.user.profile.points_weight += new_exercise.amount*30
+            request.user.profile.points_total += new_exercise.amount*30
+        if exercise_type == 'CALISTHENICS':
+            request.user.profile.points_calis += new_exercise.amount*8
+            request.user.profile.points_total += new_exercise.amount*8
+
 def add_exercise(request):
     if request.method == 'POST':
         form = ExerciseForm(request.POST)
@@ -39,25 +61,9 @@ def add_exercise(request):
             new_exercise.profile = request.user.profile
             new_exercise.save()
 
-            #This code mad me want to punch a hole through my screen
-            if new_exercise.exercise_type[0] == 'CARDIO':
-                if request.user.profile.points_cardio == None:
-                    request.user.profile.points_cardio = 0
-                    request.user.profile.points_total = 0
-                request.user.profile.points_cardio += new_exercise.amount*16
-                request.user.profile.points_total += new_exercise.amount*16
-            if new_exercise.exercise_type[0] == 'WEIGHT_TRAINING':
-                if request.user.profile.points_weight == None:
-                    request.user.profile.points_weight = 0
-                    request.user.profile.points_total = 0
-                request.user.profile.points_weight += new_exercise.amount*30
-                request.user.profile.points_total += new_exercise.amount*30
-            if new_exercise.exercise_type[0] == 'CALISTHENICS':
-                if request.user.profile.points_calis == None:
-                    request.user.profile.points_calis = 0
-                    request.user.profile.points_total = 0
-                request.user.profile.points_calis += new_exercise.amount*8
-                request.user.profile.points_total += new_exercise.amount*8
+            instantiate_points()
+
+            calculate_points(new_exercise.exercise_type[0])
 
             request.user.profile.logs.add(new_exercise)
             request.user.save()
@@ -86,6 +92,64 @@ def add_goal(request):
         form2 = GoalsForm()
     return render(request, 'exercising/goals.html', {'form': form2})
 
+
+def leaderboard_total(self):
+    instantiate_points()
+    # items = list(Profile.objects.filter(points_total != None).order_by('-points_total')[:10])
+    # while items.len() < 10:
+    #     items.append(None)
+    # return items
+    return Profile.objects.filter(points_total != None).order_by('-points_total')[:10]
+
+def leaderboard_cardio(self):
+    instantiate_points()
+    # items = list(Profile.objects.filter(points_total != None).order_by('-points_cardio')[:10])
+    # while lists.len() < 10:
+    #     items.append(None)
+    # return items
+    return Profile.objects.filter(points_total != None).order_by('-points_cardio')[:10]
+
+def leaderboard_weight(self):
+    instantiate_points()
+    # items = list(Profile.objects.filter(points_total != None).order_by('-points_weight')[:10])
+    # while items.len() < 10:
+    #     items.append(None)
+    # return items
+    return Profile.objects.filter(points_total != None).order_by('-points_weight')[:10]
+
+def leaderboard_calis(self):
+    # instantiate_points()
+    # items = list(Profile.objects.filter(points_total != None).order_by('-points_calis')[:10])
+    # while items.len() < 10:
+    #     items.append(None)
+    # return items
+    return Profile.objects.filter(points_total != None).order_by('-points_calis')[:10]
+
+def get_placements(request):
+    instantiate_points()
+    placement = 0
+    placements = []
+    if points_type == "TOTAL":
+        for prof in Profile.objects.filter(points_total != None).order_by('-points_total')[:]:
+            placement += 1
+            if prof == request.user.profile:
+                break
+    if points_type == "CARDIO":
+        for prof in Profile.objects.filter(points_total != None).order_by('-points_cardio')[:]:
+            placement += 1
+            if prof == request.user.profile:
+                break
+    if points_type == "WEIGHT_TRAINING":
+        for prof in Profile.objects.filter(points_total != None).order_by('-points_weight')[:]:
+            placement += 1
+            if prof == request.user.profile:
+                break
+    if points_type == "CALISTHENICS":
+        for prof in Profile.objects.filter(points_total != None).order_by('-points_calis')[:]:
+            placement += 1
+            if prof == request.user.profile:
+                break
+    return placement
 
 
 def map(request):
