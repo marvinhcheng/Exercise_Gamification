@@ -23,6 +23,7 @@
 		Date: 02/18/2021
 		Url: https://getbootstrap.com/docs/4.0/components/navbar/
 		-->
+    {% if user.is_authenticated %}
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <a class="navbar-brand" href="#">A-03</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -59,6 +60,7 @@
           </ul>
         </div>
     </nav>
+    {% endif %}
   
 
     {% if user.is_authenticated %}
@@ -119,9 +121,21 @@
                 <div class="row">
                   Goal set on {{ item.date }}
                 </div>
-                <div style="height: 20px; background-color: red; width: {{ item.get_progress }}%">
-                  <span style="color: white;">{{ item.get_progress }}%</span>
-                </div>
+                {% if item.get_progress < 50 %}
+                  <div style="height: 20px; background-color: red; width: {{ item.get_progress }}%" id="goal_bar" >
+                    <span style="color: white; margin-left: 15px;">{{ item.get_progress }}%</span>
+                  </div>
+                  {% endif %}
+                  {% if item.get_progress >= 50 and item.get_progress != 100%}
+                  <div style="height: 20px; background-color: blue; width: {{ item.get_progress }}%" id="goal_bar" >
+                    <span style="color: white; margin-left: 15px;">{{ item.get_progress }}%</span>
+                  </div>
+                  {% endif %}
+                  {% if item.get_progress == 100 %}
+                  <div style="height: 20px; background-color: green; width: {{ item.get_progress }}%" id="goal_bar" >
+                    <span style="color: white; margin-left: 15px;">{{ item.get_progress }}%   COMPLETED</span>
+                  </div>
+                  {% endif %}
               </div>
             </li>
             {% endfor %}
@@ -154,7 +168,12 @@
   
 
     {% else %}
-    <a href="{% provider_login_url 'google' %}">Login with Google</a>
+    <!-- <a href="{% provider_login_url 'google' %}">Login with Google</a> -->
+    <div id="google_login"> 
+      <h3 classs= "m-5">Please log in</h2>
+      <a href="{% provider_login_url 'google' %}"><input type="image" src="{% static 'exercising/google_login.png' %}" id="google_img" /></a>
+    </div>
+    <!-- <input type="image" src="{% static 'exercising/google_login.png' %}" /> -->
     {% endif %}
 
     <div class="container" style="height: 200px;">
