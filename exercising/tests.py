@@ -23,49 +23,57 @@ class logsTest(TestCase):
     #     self.assertEqual(response.status_code, 302)     #302 redirects to home page
     #     #self.assertContains(response, "2021-04-04")
 
-    # def test_form_success(self):
-    #     form_data = {'exercise_type': ("Cardio", "Cardio"),
-    #                  'duration': '1.0',
-    #                  'date': '04/04/2021'}
+    def test_form_success(self):
+        form_data = {'exercise_type': "CARDIO",
+                     'amount': '10',
+                     'date': '04/04/2021'}
 
-    #     form = ExerciseForm(data = form_data)
-    #     self.assertTrue(form.is_valid())
+        form = ExerciseForm(data = form_data)
+        self.assertTrue(form.is_valid())
 
     def test_form_invalid_input(self):
-        form_data = {'exercise_type': ("Fart", "Fart"),
-                     'duration': '123.0',
+        form_data = {'exercise_type': "Fart",
+                     'amount': '123.0',
+                     'date': '04/04/2021'}
+
+        form = ExerciseForm(data = form_data)
+        self.assertFalse(form.is_valid())
+
+    def test_form_invalid_input(self):
+        form_data = {'exercise_type': "CARDIO",
+                     'amount': '-10',
                      'date': '04/04/2021'}
 
         form = ExerciseForm(data = form_data)
         self.assertFalse(form.is_valid())
 
     def test_form_no_input(self):
-        form_data = {'exercise_type': ("", ""),
-                     'duration': '',
+        form_data = {'exercise_type': "",
+                     'amount': '',
                      'date': ''}
 
         form = ExerciseForm(data = form_data)
         self.assertFalse(form.is_valid())
 
     def test_form_no_date(self):
-        form_data = {'exercise_type': ("Cardio", "Cardio"),
-                     'duration': '1.00',
+        form_data = {'exercise_type': "CARDIO",
+                     'duration': '1',
                      'date': ''}
 
         form = ExerciseForm(data = form_data)
         self.assertFalse(form.is_valid())
 
     def test_form_no_duration(self):
-        form_data = {'exercise_type': ("Cardio", "Cardio"),
-                     'duration': '1.00',
+        form_data = {'exercise_type': "CARDIO",
+                     'duration': '1',
                      'date': ''}
 
         form = ExerciseForm(data = form_data)
         self.assertFalse(form.is_valid())
 
     def test_form_no_exercise(self):
-        form_data = {'exercise_type': ("",""),
-                     'duration': '1.00',
+        form_data = {'exercise_type': "",
+                     'duration': '1',
                      'date': ''}
 
         form = ExerciseForm(data = form_data)
