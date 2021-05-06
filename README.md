@@ -24,18 +24,21 @@ Each goal requires the user to enter goal type, duration, and date. Exercises
 completed after the set date will count towards completing the goal, and your progress 
 can be seen as a bar. 
 
-5. On the Music page, users can play music for exercising. Refreshing the 
+5. The leaderboards page displays the top 10 people for each points category.
+   It also shows your points and ranks for each category.
+
+6. On the Music page, users can play music for exercising. Refreshing the 
 page generates new music.
 
-6. Map of Gyms page has a map that shows locations and addresses of gyms
+7. Map of Gyms page has a map that shows locations and addresses of gyms
 on grounds.
 
-7. Groups page allows users to create groups with other users of the app. 
+8. Groups page allows users to create groups with other users of the app. 
 Users can join public groups or be invited to a private group. Users can 
 also create public or private groups. Inside of those groups, users can 
 send messages to each other. The owner of the group can add or delete 
 users from the group.
 
-8. The Diet Tips page displays diet tips that may be very helpful for users.
+9. The Diet Tips page displays diet tips that may be very helpful for users.
 
-9. Exercise Tips page contains exercise tips for users.
+10. Exercise Tips page contains exercise tips for users.
