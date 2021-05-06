@@ -89,10 +89,21 @@ def add_goal(request):
 
 
 
+    '''
+    Title: MapBox Map 
+	Date: 04/30/2021
+	Url: https://www.youtube.com/watch?v=3gNIa1nLTcs
+    '''
 def map(request):
     mapbox_access_token = 'pk.eyJ1Ijoic2VyaGlpMDQ0IiwiYSI6ImNrbmR0d281ZTBhdXgyem9kdDJnNHdtdmcifQ.8K3hi5bBXp2lZTwOWvbFUA'
     return render(request, 'exercising/map.html', {'mapbox_access_token': mapbox_access_token})
 
+
+    '''
+	Title: Spotipy music player 
+	Date: 04/30/2021
+	Url: https://www.youtube.com/watch?v=9yL3rTW3SIA
+    '''
 def music (request):
     artists = [
         'https://open.spotify.com/artist/791L9eOcjQ3FiorSX2xvcf?si=YYpeZft2RsKDWG_TfGfDBQ',

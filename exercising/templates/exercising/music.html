@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+{% load static %}
 <html>
   <head>
     <!-- Required meta tags -->
@@ -12,6 +13,7 @@
       integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl"
       crossorigin="anonymous"
     />
+	<link rel="stylesheet" href="{% static 'exercising/style.css' %}">
   </head>
   <body>
     <!--
@@ -82,13 +84,18 @@
     </div>
 -->
 
+	<!--
+	Title: Spotipy music player 
+	Date: 04/30/2021
+	Url: https://www.youtube.com/watch?v=9yL3rTW3SIA
+	-->
     {% if results %}
-    <div class="container bg-dark p-2">
+    <div class="container bg-dark p-2 text-center">
     {% for x in results %}
     <ol class="list-group mt-1">
       <li class="list-group-item bg-info text-center"><h3 class="text-white" >{{x.name}}</h3></li>
-      <li class="list-group-item" ><a href='{{x.preview_url}}'><button type="button" class="btn btn-success btn-lg mt-1">PLAY SONG</button></a></li>
-      <li class="list-group-item"><img src="{{x.album.images.0.url}}" class="img-fluid img-thumbnail" alt=""></li>
+      <li class="list-group-item" ><a href='{{x.preview_url}}'><button type="button" class="btn btn-success mt-1">PLAY SONG</button></a></li>
+      <li class="list-group-item"><img src="{{x.album.images.0.url}}" class="img-fluid img-thumbnail" alt="" width="250"></li>
     </ol><hr>
     {% endfor %}
     </div>
