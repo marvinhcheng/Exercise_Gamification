@@ -145,7 +145,11 @@ class CreateGroup(TemplateView):
         group_form = GroupForm()
         return render(request, self.template_name, {'group_form': group_form})
 
-
+"""
+Title: Introduction to class based views
+Date: 04/07/21
+url: https://docs.djangoproject.com/en/3.2/topics/class-based-views/intro/
+"""
 class edit_group(TemplateView):
     template_name = 'exercising/editgroup.html'
     model = Group

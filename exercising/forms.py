@@ -3,6 +3,11 @@ from .models import Group, Message, Exercise_Log, Goal_Log, exercises#, regions
 
 
 
+"""
+Title: How to use Date Picker with Django
+Date: 05/03/21
+url: https://simpleisbetterthancomplex.com/tutorial/2019/01/03/how-to-use-date-picker-with-django.html
+"""
 
 class ExerciseForm(forms.Form):
     exercise_type = forms.ChoiceField(choices = exercises, label="Exercise Type (click for dropdown)")
@@ -26,7 +31,11 @@ class GoalsForm(forms.Form):
     #     amount.label = "Duration (min)"
     date = forms.DateField(label="Date", widget=forms.widgets.DateInput(attrs={'type': 'date'}))
 
-
+"""
+Title: Django ModelForms
+Date: 04/07/21
+url: https://www.journaldev.com/22467/django-modelforms
+"""
 class GroupForm(forms.ModelForm):
     class Meta:
         model = Group

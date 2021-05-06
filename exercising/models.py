@@ -157,9 +157,19 @@ class Group(models.Model):
 
     def __str__(self):
         return self.name
+
+    """
+    Title: Django Quick Tips: get_absolut_url()
+    Date: 04/19/21
+    url: https://levelup.gitconnected.com/django-quick-tips-get-absolute-url-1c22321f806b
+    """
     def get_absolute_url(self):
         return reverse('group_detail', args=[str(self.id)])
-    
+"""
+Title: Group Private Messages in Django by users
+Date: 04/19/21
+url: https://stackoverflow.com/questions/54382317/group-private-messages-in-django-by-users/54523123
+"""
 class Message(models.Model):
     message = models.ForeignKey(Group, on_delete=models.CASCADE, related_name='messages')
     description = models.TextField()

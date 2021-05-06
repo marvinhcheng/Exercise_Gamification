@@ -84,9 +84,10 @@
  
     </h1>
     
+    <div class="container" style="color: white">{{ user.profile.get_points_left }} points until next level</div>
     <div class="container" id="lvl">
       
-        <div id = "graybar"><span style="color: black; margin-left: 15px;">{{ user.profile.get_points_left }} points until next level</span></div>
+        <div id = "graybar"><span style="color: black; margin-left: 15px;"></span></div>
         <div id="progress">
           {% if user.profile.get_level_progress < 50 %}
           <div style="height: 25px; background-color: red; width: {{ user.profile.get_level_progress }}%" id="goal_bar">
