@@ -120,53 +120,63 @@
           <li class="list-group-item">{{ user.profile.points_total}}</li> -->
 
           <h4>Your Levels</h4>
+          <p  style="color: white; font-size: small;">
+            These are your levels! Exercise for longer and more often to level up and earn new badges!
+          </p>
             <li class = "list-group-item">Cardio Level: {{ user.profile.get_cardio_level }}
               {% if user.profile.get_cardio_progress < 50 %}
               <div style="height: 20px; background-color: red; width: {{ user.profile.get_cardio_progress }}%" id="goal_bar">
-                <span style="color: white; margin-left: 15px;">{{ user.profile.get_cardio_left }} points until next level</span>
+                <span style="color: white; margin-left: 15px;"></span>
               </div>
               {% endif %}
               {% if user.profile.get_cardio_progress >= 50 %}
               <div style="height: 20px; background-color: blue; width: {{ user.profile.get_cardio_progress }}%" id="goal_bar">
-                <span style="color: white; margin-left: 15px;">{{ user.profile.get_cardio_left }} points until next level</span>
+                <span style="color: white; margin-left: 15px;"></span>
               </div>
               {% endif %}
+              <div>{{ user.profile.get_cardio_left }} points until next level</div>
             </li>
+
             <li class = "list-group-item">Weight Training Level: {{ user.profile.get_weight_level }}
               {% if user.profile.get_weight_progress < 50 %}
               <div style="height: 20px; background-color: red; width: {{ user.profile.get_weight_progress }}%" id="goal_bar">
-                <span style="color: white; margin-left: 15px;">{{ user.profile.get_weight_left }} points until next level</span>
+                <span style="color: white; margin-left: 15px;"></span>
               </div>
               {% endif %}
               {% if user.profile.get_weight_progress >= 50 %}
               <div style="height: 20px; background-color: blue; width: {{ user.profile.get_weight_progress }}%" id="goal_bar">
-                <span style="color: white; margin-left: 15px;">{{ user.profile.get_weight_left }} points until next level</span>
+                <span style="color: white; margin-left: 15px;"></span>
               </div>
               {% endif %}
+              <div>{{ user.profile.get_weight_left }} points until next level</div>
             </li>
+
             <li class = "list-group-item">Calisthenics Level: {{ user.profile.get_calis_level }}
               {% if user.profile.get_calis_progress < 50 %}
               <div style="height: 20px; background-color: red; width: {{ user.profile.get_calis_progress }}%" id="goal_bar">
-                <span style="color: white; margin-left: 15px;">{{ user.profile.get_calis_left }} points until next level</span>
+                <span style="color: white; margin-left: 15px;"></span>
               </div>
               {% endif %}
               {% if user.profile.get_calis_progress >= 50 %}
               <div style="height: 20px; background-color: blue; width: {{ user.profile.get_calis_progress }}%" id="goal_bar">
-                <span style="color: white; margin-left: 15px;">{{ user.profile.get_calis_left }} points until next level</span>
+                <span style="color: white; margin-left: 15px;"></span>
               </div>
               {% endif %}
+              <div>{{ user.profile.get_calis_left }} points until next level</div>
             </li>
+
             <li class = "list-group-item">Overall Level: {{ user.profile.get_total_level }}
               {% if user.profile.get_level_progress < 50 %}
               <div style="height: 20px; background-color: red; width: {{ user.profile.get_level_progress }}%" id="goal_bar">
-                <span style="color: white; margin-left: 15px;">{{ user.profile.get_points_left }} points until next level</span>
+                <span style="color: white; margin-left: 15px;"></span>
               </div>
               {% endif %}
               {% if user.profile.get_level_progress >= 50 %}
               <div style="height: 20px; background-color: blue; width: {{ user.profile.get_level_progress }}%" id="goal_bar">
-                <span style="color: white; margin-left: 15px;">{{ user.profile.get_points_left }} points until next level</span>
+                <span style="color: white; margin-left: 15px;"></span>
               </div>
               {% endif %}
+              <div>{{ user.profile.get_points_left }} points until next level</div>
             </li>
 
           <br>
