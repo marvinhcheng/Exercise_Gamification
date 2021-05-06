@@ -91,7 +91,7 @@
             </ul>
           </div>
           <div>
-            <h3>Public Groups You'be Joined</h3>
+            <h3>Public Groups You've Joined</h3>
             <ul class="list-group">
               {% for group in group_list %} {% if request.user in group.members.all and request.user != group.owner %}
               {% if not group.private %}
