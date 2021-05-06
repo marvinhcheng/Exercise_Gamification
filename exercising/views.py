@@ -74,11 +74,8 @@ def add_exercise(request):
             new_exercise.date = form.cleaned_data['date']
             new_exercise.profile = request.user.profile
             new_exercise.save()
-
             instantiate_points()
-
             calculate_points(new_exercise.exercise_type[0])
-
             request.user.profile.logs.add(new_exercise)
             request.user.save()
             request.user.profile.save()
@@ -133,10 +130,21 @@ def get_placements(request):
     return placement
 
 
+    '''
+    Title: MapBox Map 
+	Date: 04/30/2021
+	Url: https://www.youtube.com/watch?v=3gNIa1nLTcs
+    '''
 def map(request):
     mapbox_access_token = 'pk.eyJ1Ijoic2VyaGlpMDQ0IiwiYSI6ImNrbmR0d281ZTBhdXgyem9kdDJnNHdtdmcifQ.8K3hi5bBXp2lZTwOWvbFUA'
     return render(request, 'exercising/map.html', {'mapbox_access_token': mapbox_access_token})
 
+
+    '''
+	Title: Spotipy music player 
+	Date: 04/30/2021
+	Url: https://www.youtube.com/watch?v=9yL3rTW3SIA
+    '''
 def music (request):
     artists = [
         'https://open.spotify.com/artist/791L9eOcjQ3FiorSX2xvcf?si=YYpeZft2RsKDWG_TfGfDBQ',
@@ -178,7 +186,11 @@ class CreateGroup(TemplateView):
         group_form = GroupForm()
         return render(request, self.template_name, {'group_form': group_form})
 
-
+"""
+Title: Introduction to class based views
+Date: 04/07/21
+url: https://docs.djangoproject.com/en/3.2/topics/class-based-views/intro/
+"""
 class edit_group(TemplateView):
     template_name = 'exercising/editgroup.html'
     model = Group

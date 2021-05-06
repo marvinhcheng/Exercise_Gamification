@@ -68,7 +68,41 @@
 
     {% if user.is_authenticated %}
     <h1 class="m-5">Welcome {{ user.username }}!</h1>
+    <h1 class="m-5">Level: {{ user.profile.get_total_level }} 
+    {% if user.profile.get_total_level < 10 %}
+    <img src="{% static 'exercising/Beginner.png' %}" alt="Badge"  class="center" width="100" height="100"> 
+    {% endif %}
 
+    {% if user.profile.get_total_level < 20 and user.profile.get_total_level >= 10 %}
+    <img src="{% static 'exercising/Novice.png' %}" alt="Badge"  class="center" width="100" height="100"> 
+    {% endif %}
+
+    {% if user.profile.get_total_level < 30 and user.profile.get_total_level >= 20 %}
+    <img src="{% static 'exercising/Athlete.png' %}" alt="Badge"  class="center" width="100" height="100"> 
+    {% endif %}
+
+    {% if user.profile.get_total_level >= 30 %}
+    <img src="{% static 'exercising/Olympian.png' %}" alt="Badge"  class="center" width="100" height="100"> 
+    {% endif %}
+ 
+    </h1>
+    
+    <div class="container" style="color: white">{{ user.profile.get_points_left }} points until next level</div>
+    <div class="container" id="lvl">
+      
+        <div id = "graybar"><span style="color: black; margin-left: 15px;"></span></div>
+        <div id="progress">
+          {% if user.profile.get_level_progress < 50 %}
+          <div style="height: 25px; background-color: red; width: {{ user.profile.get_level_progress }}%" id="goal_bar">
+            
+          </div>
+          {% endif %}
+          {% if user.profile.get_level_progress >= 50 %}
+          <div style="height: 25px; background-color: blue; width: {{ user.profile.get_level_progress }}%" id="goal_bar">
+          </div>
+          {% endif %}
+        </div>
+    </div>
 
     <div class = "container">
       <div class="row">
@@ -83,9 +117,72 @@
             <li class = "list-group-item">Cardio Points: {{ user.profile.points_cardio }}</li>
             <li class = "list-group-item">Weight Training Points: {{ user.profile.points_weight }}</li>
             <li class = "list-group-item">Calisthenics Points: {{ user.profile.points_calis }}</li>
+            <li class = "list-group-item">Total Points: {{ user.profile.points_total }}</li>
           </ul>
-          <h4>Total Points</h4>
-          <li class="list-group-item">{{ user.profile.points_total }}</li>
+
+          <!-- <h4>Total Points</h4>
+          <li class="list-group-item">{{ user.profile.points_total}}</li> -->
+
+          <h4>Your Levels</h4>
+          <p  style="color: white; font-size: small;">
+            These are your levels! Exercise for longer and more often to level up and earn new badges!
+          </p>
+            <li class = "list-group-item">Cardio Level: {{ user.profile.get_cardio_level }}
+              {% if user.profile.get_cardio_progress < 50 %}
+              <div style="height: 20px; background-color: red; width: {{ user.profile.get_cardio_progress }}%" id="goal_bar">
+                <span style="color: white; margin-left: 15px;"></span>
+              </div>
+              {% endif %}
+              {% if user.profile.get_cardio_progress >= 50 %}
+              <div style="height: 20px; background-color: blue; width: {{ user.profile.get_cardio_progress }}%" id="goal_bar">
+                <span style="color: white; margin-left: 15px;"></span>
+              </div>
+              {% endif %}
+              <div>{{ user.profile.get_cardio_left }} points until next level</div>
+            </li>
+
+            <li class = "list-group-item">Weight Training Level: {{ user.profile.get_weight_level }}
+              {% if user.profile.get_weight_progress < 50 %}
+              <div style="height: 20px; background-color: red; width: {{ user.profile.get_weight_progress }}%" id="goal_bar">
+                <span style="color: white; margin-left: 15px;"></span>
+              </div>
+              {% endif %}
+              {% if user.profile.get_weight_progress >= 50 %}
+              <div style="height: 20px; background-color: blue; width: {{ user.profile.get_weight_progress }}%" id="goal_bar">
+                <span style="color: white; margin-left: 15px;"></span>
+              </div>
+              {% endif %}
+              <div>{{ user.profile.get_weight_left }} points until next level</div>
+            </li>
+
+            <li class = "list-group-item">Calisthenics Level: {{ user.profile.get_calis_level }}
+              {% if user.profile.get_calis_progress < 50 %}
+              <div style="height: 20px; background-color: red; width: {{ user.profile.get_calis_progress }}%" id="goal_bar">
+                <span style="color: white; margin-left: 15px;"></span>
+              </div>
+              {% endif %}
+              {% if user.profile.get_calis_progress >= 50 %}
+              <div style="height: 20px; background-color: blue; width: {{ user.profile.get_calis_progress }}%" id="goal_bar">
+                <span style="color: white; margin-left: 15px;"></span>
+              </div>
+              {% endif %}
+              <div>{{ user.profile.get_calis_left }} points until next level</div>
+            </li>
+
+            <li class = "list-group-item">Overall Level: {{ user.profile.get_total_level }}
+              {% if user.profile.get_level_progress < 50 %}
+              <div style="height: 20px; background-color: red; width: {{ user.profile.get_level_progress }}%" id="goal_bar">
+                <span style="color: white; margin-left: 15px;"></span>
+              </div>
+              {% endif %}
+              {% if user.profile.get_level_progress >= 50 %}
+              <div style="height: 20px; background-color: blue; width: {{ user.profile.get_level_progress }}%" id="goal_bar">
+                <span style="color: white; margin-left: 15px;"></span>
+              </div>
+              {% endif %}
+              <div>{{ user.profile.get_points_left }} points until next level</div>
+            </li>
+
           <br>
           <h4>Your goals</h4>
           <!-- <a href="/logs/" style="color: white;">Set another goal to hit</a> -->
@@ -145,7 +242,7 @@
             {% for item in user.profile.logs.all reversed %}
             <li class="list-group-item">
               On {{ item }} you did {{item.exercise_type}} for {{ item.amount }}
-              minutes
+              minutes - {{item.get_points}} Points Awarded
             </li>
             {% endfor %}
           </ul>

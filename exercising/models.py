@@ -84,7 +84,42 @@ class Profile(models.Model):
             if self == prof:
                return count
         return -1
+   
+    def get_total_level(self):
+        return int((self.points_total/1000)+1)
 
+    def get_cardio_level(self):
+        return int((self.points_cardio/1000)+1)
+
+    def get_weight_level(self):
+        return int((self.points_weight/1000)+1)
+    
+    def get_calis_level(self):
+        return int((self.points_calis/1000)+1)
+
+    def get_points_left(self):
+        return 1000 - int(self.points_total % 1000)
+
+    def get_cardio_left(self):
+        return 1000 - int(self.points_cardio % 1000)
+        
+    def get_weight_left(self):
+        return 1000 - int(self.points_weight % 1000)
+    
+    def get_calis_left(self):
+        return 1000 - int(self.points_calis % 1000)
+
+    def get_level_progress(self):
+        return 100 - round(((1000 - int(self.points_total % 1000))/ 1000 * 100),2)
+    
+    def get_cardio_progress(self):
+        return 100 - round(((1000 - int(self.points_cardio % 1000))/ 1000 * 100),2)
+    
+    def get_weight_progress(self):
+        return 100 -round(((1000 - int(self.points_weight % 1000))/ 1000 * 100),2)
+    
+    def get_calis_progress(self):
+        return 100 -round(((1000 - int(self.points_calis % 1000))/ 1000 * 100),2)
 
 class Exercise_Log(models.Model):
     exercise_type = models.CharField(max_length = 20, choices=exercises, default='Cardio')
@@ -92,6 +127,14 @@ class Exercise_Log(models.Model):
     amount = models.IntegerField(default=0)
     date = models.DateField(default=datetime.date.today)
     profile = models.ForeignKey(Profile, null=True, related_name='logs', on_delete=models.CASCADE)
+
+    def get_points(self):
+        if(self.exercise_type == 'CARDIO'):
+            return self.amount * 16
+        elif(self.exercise_type == 'CALISTHENICS'):
+            return self.amount * 8
+        elif(self.exercise_type == "WEIGHT_TRAINING"):
+            return self.amount * 30
 
     def __str__(self):
         return str(self.date)
@@ -148,9 +191,19 @@ class Group(models.Model):
 
     def __str__(self):
         return self.name
+
+    """
+    Title: Django Quick Tips: get_absolut_url()
+    Date: 04/19/21
+    url: https://levelup.gitconnected.com/django-quick-tips-get-absolute-url-1c22321f806b
+    """
     def get_absolute_url(self):
         return reverse('group_detail', args=[str(self.id)])
-    
+"""
+Title: Group Private Messages in Django by users
+Date: 04/19/21
+url: https://stackoverflow.com/questions/54382317/group-private-messages-in-django-by-users/54523123
+"""
 class Message(models.Model):
     message = models.ForeignKey(Group, on_delete=models.CASCADE, related_name='messages')
     description = models.TextField()

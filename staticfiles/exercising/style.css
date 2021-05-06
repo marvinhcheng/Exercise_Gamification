@@ -1,0 +1,92 @@
+
+html {
+    height: 100% !important;
+}
+
+/* body {
+    background-color: rgb(75, 107, 253) !important;
+
+} */
+
+h1 {
+    text-align: center;
+    color: white;
+}
+
+h4 {
+    color: white;
+    padding-top: 20px;
+}
+
+h3 {
+    color: white;
+    padding-top: 20px;
+}
+
+body {
+    margin-bottom: 10% !important;
+    /* background-color: #34568b !important; */
+    background-color: #5f89cc !important;
+}
+
+
+.container {
+    font-size: small;
+}
+
+.container.list-group-item {
+    border: double;
+}
+
+footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 4.5rem; /* Footer height */
+
+  }
+
+  #google_login {
+      text-align: center;
+      margin-top: 15%;
+      color: white;
+           
+  }
+
+  #google_img {
+      border-radius: 20px;
+  }
+
+  #goal_bar {
+      border-radius: 25px;
+      
+  }
+
+
+  /* Title: How to overlay one div with another
+  Date: 05/05/21
+  url: https://stackoverflow.com/questions/2941189/how-to-overlay-one-div-over-another-div */
+  #lvl {
+    width: 90%;
+    height: 25px;
+    position: relative;
+    border-radius: 25px;
+  }
+  #graybar,
+  #progress {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+  #progress {
+    z-index: 10;
+  }
+
+  #graybar {
+      background-color: rgb(221, 216, 216);
+      border-radius: 25px;
+  }
+  
+

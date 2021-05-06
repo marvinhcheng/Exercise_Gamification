@@ -26,6 +26,7 @@
 	href="https://api.tiles.mapbox.com/mapbox-gl-js/v2.2.0/mapbox-gl.css"
 	rel="stylesheet"
 	/>
+	<link rel="stylesheet" href="{% static 'exercising/style.css' %}">
 	<style>
 	body {
 	margin: 0;
@@ -35,7 +36,7 @@
 	top: 0;
 	bottom: 0;
 	width: 100%;
-	height: 400px;
+	height: 700px;
 	}
 	.marker {
 	background-image: url('https://i.ibb.co/8754k2P/1200px-University-of-Virginia-Rotunda-logo-svg.png');
@@ -100,7 +101,13 @@
 				</ul>
 			</div>
 	</nav>
-	
+
+
+	<!--
+	Title: MapBox Map 
+	Date: 04/30/2021
+	Url: https://www.youtube.com/watch?v=3gNIa1nLTcs	 
+	-->
 	<div id="map"></div>
  
 	<script>
@@ -160,7 +167,7 @@
 	container: 'map',
 	style: 'mapbox://styles/mapbox/light-v10',
 	center: [-78.51, 38.04],
-	zoom: 12
+	zoom: 13
 	});
 	 
 	// add markers to map
