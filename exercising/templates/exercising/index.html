@@ -41,6 +41,9 @@
               <a class="nav-link" href="/goals/">Goals</a>
             </li>
             <li class="nav-item">
+              <a class="nav-link" href="/leaderboards/">Leaderboards</a>
+            </li>
+            <li class="nav-item">
               <a class="nav-link" href="/music/">Music</a>
             </li>
             <li class="nav-item">
@@ -116,6 +119,7 @@
             <li class = "list-group-item">Calisthenics Points: {{ user.profile.points_calis }}</li>
             <li class = "list-group-item">Total Points: {{ user.profile.points_total }}</li>
           </ul>
+
           <!-- <h4>Total Points</h4>
           <li class="list-group-item">{{ user.profile.points_total}}</li> -->
 
@@ -193,7 +197,7 @@
             </button>
           </form>
           <ul class="list-group">
-            {% for item in user.profile.goals.all reversed%}
+            {% for item in user.profile.goals.all reversed %}
             <li class="list-group-item">
               <div class="container">
                 <div class="row">
@@ -207,7 +211,7 @@
                     <span style="color: white; margin-left: 15px;">{{ item.get_progress }}%</span>
                   </div>
                   {% endif %}
-                  {% if item.get_progress >= 50 and item.get_progress != 100%}
+                  {% if item.get_progress >= 50 and item.get_progress != 100 %}
                   <div style="height: 20px; background-color: blue; width: {{ item.get_progress }}%" id="goal_bar" >
                     <span style="color: white; margin-left: 15px;">{{ item.get_progress }}%</span>
                   </div>
