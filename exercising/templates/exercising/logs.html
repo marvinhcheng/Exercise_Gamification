@@ -1,4 +1,7 @@
 <!DOCTYPE html>
+{% load socialaccount %}
+{% load crispy_forms_tags %}
+{% load static %}
 <html>
   <head>
     <!-- Required meta tags -->
@@ -12,6 +15,7 @@
       integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl"
       crossorigin="anonymous"
     />
+    <link rel="stylesheet" href="{% static 'exercising/style.css' %}">
   </head>
   <body>
     <!--
@@ -19,78 +23,83 @@
 		Date: 02/18/2021
 		Url: https://getbootstrap.com/docs/4.0/components/navbar/
 		-->
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <a class="navbar-brand" href="#">A-03</a>
-      <button
-        class="navbar-toggler"
-        type="button"
-        data-toggle="collapse"
-        data-target="#navbarSupportedContent"
-        aria-controls="navbarSupportedContent"
-        aria-expanded="false"
-        aria-label="Toggle navigation"
-      >
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto">
-          <li class="nav-item active">
-            <a class="nav-link" href="/">Home<span class="sr-only"></span></a>
-          </li>
-          <li class="nav-item active">
-            <a class="nav-link" href="/logs/"
-              >Logs<span class="sr-only"></span
-            ></a>
-          </li>
+	<nav class="navbar navbar-expand-lg navbar-light bg-light">
+		<a class="navbar-brand" href="#">A-03</a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<ul class="navbar-nav mr-auto">
+					<li class="nav-item active">
+						<a class="nav-link" href="/">Home<span class="sr-only"></span></a>
+					</li>
+					<li class="nav-item active">
+						<a class="nav-link" href="/logs/">Logs<span class="sr-only"></span></a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="/goals/">Goals</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="/music/">Music</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="/map/">Map of Gyms</a>
           <li class="nav-item">
-            <a class="nav-link" href="/goals/">Goals</a>
+            <a class="nav-link" href="/groups/">Groups</a>
           </li>
+					<li class="nav-item">
+						<a class="nav-link" href="/diet/">Diet Tips</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="/exercise_tips/">Exercise Tips</a>
+					</li>
           <li class="nav-item">
-            <a class="nav-link" href="/diet/">Diet Tips</a>
+            <a class="nav-link" href="/logout/">Logout</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/exercise_tips/">Exercise Tips</a>
-          </li>
-        </ul>
-      </div>
-    </nav>
+				</ul>
+			</div>
+	</nav>
 
-    <h2>Exercise Logs</h2>
-    <div>
-      <h4>Enter your exercise</h4>
-      <form action="/logs/" method="post">
-        <div>
-          <div class="form-group">{% csrf_token %} {{ form }}</div>
-          <div class="button">
-            <!-- <input type="submit" value="Submit" /> -->
-            <button type="submit" class="btn btn-primary">Submit</button>
+
+    {% if user.is_authenticated %}
+    <h1 class = "m-5">Log of Your Exercises</h1>
+    <div class="container">
+      <div class="row">
+        <div class="col">
+          <h4>Enter your exercise</h4>
+          <form action="/logs/" method="post">
+            <div>
+              <div class="form-group" style="color: white;">{% csrf_token %} {{ form|crispy }}</div>
+              <div class="button">
+                <!-- <input type="submit" value="Submit" /> -->
+                <button type="submit" class="btn btn-primary">Submit</button>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="col">
+          <div>
+            <h4>Log of your exercises</h4>
+            <ul class = "list-group overflow-auto">
+              {% for item in user.profile.logs.all reversed %}
+              <li class = "list-group-item">
+                On {{ item }} you did {{item.exercise_type}} for {{ item.amount }}
+                minutes
+              </li>
+              {% endfor %}
+            </ul>
           </div>
         </div>
-      </form>
+      </div>
     </div>
-    <div>
-      <h4>Log of your exercises</h4>
-      <ul>
-        {% for item in user.profile.logs.all %}
-        <li>
-          On {{ item }} you did {{item.exercise_type}} for {{ item.duration }}
-          hours
-        </li>
-        {% endfor %}
-      </ul>
-      <!-- <h4>Log of your exercises</h4>
-      {% if logs_list %}
-      <ul>
-        {% for item in logs_list %}
-        <li>
-          On {{ item }} you did {{item.exercise_type}} for {{ item.duration }}
-          hours
-        </li>
-        {% endfor %}
-      </ul>
-      {% else %}
-      <p>No logs available</p>
-      {% endif %} -->
+    {% else %}
+    <div id="google_login"> 
+      <h3 classs= "m-5">Please log in</h2>
+      <a href="{% provider_login_url 'google' %}"><input type="image" src="{% static 'exercising/google_login.png' %}"/></a>
+    </div>
+    {% endif %}
+    <div class="container" style="height: 200px;">
+
     </div>
 
     <!--FOOTER-->

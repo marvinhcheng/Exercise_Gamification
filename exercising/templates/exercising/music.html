@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl"
+      crossorigin="anonymous"
+    />
+	<link rel="stylesheet" href="{% static 'exercising/style.css' %}">
+  </head>
+  <body>
+    <!--
+		Title: Navigation bar Bootstrap
+		Date: 02/18/2021
+		Url: https://getbootstrap.com/docs/4.0/components/navbar/
+		-->
+	<nav class="navbar navbar-expand-lg navbar-light bg-light">
+		<a class="navbar-brand" href="#">A-03</a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<ul class="navbar-nav mr-auto">
+					<li class="nav-item active">
+						<a class="nav-link" href="/">Home<span class="sr-only"></span></a>
+					</li>
+					<li class="nav-item active">
+						<a class="nav-link" href="/logs/">Logs<span class="sr-only"></span></a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="/goals/">Goals</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="/music/">Music</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="/map/">Map of Gyms</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/groups/">Groups</a>
+          </li>
+					<li class="nav-item">
+						<a class="nav-link" href="/diet/">Diet Tips</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="/exercise_tips/">Exercise Tips</a>
+					</li>
+          <li class="nav-item">
+            <a class="nav-link" href="/logout/">Logout</a>
+          </li>
+				</ul>
+			</div>
+	</nav>
+	
+	<title>Music</title>
+	</head>
+	
+	<body>
+		<!-- As a heading -->
+		<div class="jumbotron ">
+			<h3 class="text-center">Best music for exercising:</h3>
+		</div>
+    
+
+    <!-- https://www.codegrepper.com/code-examples/javascript/refresh+page+button+in+bootstrap -->
+    <div class="button" style="text-align: center;">
+      <button type="submit" class="btn btn-success" onClick="window.location.reload();">Refresh Page For More Music</button>
+    </div>
+
+
+<!--
+    <div class="container">
+    <form method="post">
+      {% csrf_token %}
+      <div class="form-group row">
+        <label for="colFormLabelLg" class="col-sm-2 col-form-label col-form-label-lg">Input Artist URI</label>
+        <div class="col-sm-10">
+          <input name="uri" type="" class="form-control form-control-lg" id="colFormLabelLg" placeholder="type uri">
+          <button type="submit" class="btn btn-success btn-lg mt-1">submit</button>
+        </div>
+      </div>
+    </form>
+    <hr>
+    </div>
+-->
+
+	<!--
+	Title: Spotipy music player 
+	Date: 04/30/2021
+	Url: https://www.youtube.com/watch?v=9yL3rTW3SIA
+	-->
+    {% if results %}
+    <div class="container bg-dark p-2 text-center">
+    {% for x in results %}
+    <ol class="list-group mt-1">
+      <li class="list-group-item bg-info text-center"><h3 class="text-white" >{{x.name}}</h3></li>
+      <li class="list-group-item" ><a href='{{x.preview_url}}'><button type="button" class="btn btn-success mt-1">PLAY SONG</button></a></li>
+      <li class="list-group-item"><img src="{{x.album.images.0.url}}" class="img-fluid img-thumbnail" alt="" width="250"></li>
+    </ol><hr>
+    {% endfor %}
+    </div>
+     {% endif %}
+	
+	
+
+    <!--FOOTER-->
+    <footer class="bg-light text-center text-lg-start">
+      <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2)">
+        A-03
+      </div>
+    </footer>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.6.0/dist/umd/popper.min.js"
+      integrity="sha384-KsvD1yqQ1/1+IA7gi3P0tyJcT3vR+NdBTt13hSJ2lnve8agRGXTTyNaBYmCR/Nwi"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.min.js"
+      integrity="sha384-nsg8ua9HAw1y0W1btsyWgBklPnCUAFLuTMS2G72MMONqmOymq585AcH49TLBQObG"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>
