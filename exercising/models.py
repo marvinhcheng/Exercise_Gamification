@@ -221,4 +221,3 @@ class Message(models.Model):
 def create_user_profile(sender, instance, created, **kwargs):
     for user in User.objects.all():
         Profile.objects.get_or_create(profile=user)
-        instantiate_points(user)
