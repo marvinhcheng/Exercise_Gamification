@@ -18,7 +18,7 @@ urlpatterns = [
     path('logout/', LogoutView.as_view(template_name='exercising/index.html'), name='logout'),
     path('goals/', views.add_goal, name='goals'),
     path('logs/', views.add_exercise, name='logs'),
-    path('leaderboards/', TemplateView.as_view(template_name='exercising/leaderboards.html')),
+    path('leaderboards/', views.LeaderboardView.as_view(), name='leaderboards'),
 
     path('music/', views.music, name='music'),
     path('map/', views.map, name='map'),

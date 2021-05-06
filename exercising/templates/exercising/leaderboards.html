@@ -41,6 +41,9 @@
               <a class="nav-link" href="/goals/">Goals</a>
             </li>
             <li class="nav-item">
+              <a class="nav-link" href="/leaderboards/">Leaderboards</a>
+            </li>
+            <li class="nav-item">
               <a class="nav-link" href="/music/">Music</a>
             </li>
             <li class="nav-item">
@@ -64,27 +67,124 @@
   
 
     {% if user.is_authenticated %}
-    <div class = "container">
+    <div class="m-5"></div>
+    <h1 class="m-3">Leaderboards</h1>
+    <div class="container" style="min-width: 1000px; min-height: 300px;">
       <div class="row">
         <div class = "col">
-            <h4>Overall Leaderboard</h4>
-            <ul class="list-group">
-              {% for item in User.objects.all %}
+          <h4 style="text-align: center;">Total Points</h4>
+          <ul class="list-group">
+            {% for item in top_points_total %}
               <li class="list-group-item">
-                {{ item.username }}
+                <div class="row">
+                  <div class="col" style="text-align: left;">{{ forloop.counter }})</div>
+                  <div class="col" style="text-align: center;">{{ item }}</div>
+                  <div class="col" style="text-align: right;">{{ item.points_total }}</div>
+                </div>
               </li>
-              {% endfor %}
-            </ul>
-            <h4></h4>
-            <ul class="list-group"></div>
+            {% endfor %}
+          </ul>
         </div>
-        <div class = "col">
-            <h4></h4>
-            <ul class="list-group"></div>
+        <div class="col">
+          <h4 style="text-align: center;">Cardio Points</h4>
+          <ul class="list-group">
+            {% for item in top_points_cardio %}
+              <li class="list-group-item">
+                <div class="row">
+                  <div class="col" style="text-align: left;">{{ forloop.counter }})</div>
+                  <div class="col" style="text-align: center;">{{ item }}</div>
+                  <div class="col" style="text-align: right;">{{ item.points_cardio }}</div>
+                </div>
+              </li>
+            {% endfor %}
+          </ul>
+        </div>
+        <div class="col">
+          <h4 style="text-align: center;">Lifting Points</h4>
+          <ul class="list-group">
+            {% for item in top_points_weight %}
+              <li class="list-group-item">
+                <div class="row">
+                  <div class="col" style="text-align: left;">{{ forloop.counter }})</div>
+                  <div class="col" style="text-align: center;">{{ item }}</div>
+                  <div class="col" style="text-align: right;">{{ item.points_weight }}</div>
+                </div>
+              </li>
+            {% endfor %}
+          </ul>
+        </div>
+        <div class="col">
+          <h4 style="text-align: center;">Calisthenics Points</h4>
+          <ul class="list-group">
+            {% for item in top_points_calis %}
+              <li class="list-group-item">
+                <div class="row">
+                  <div class="col" style="text-align: left;">{{ forloop.counter }})</div>
+                  <div class="col" style="text-align: center;">{{ item }}</div>
+                  <div class="col" style="text-align: right;">{{ item.points_calis }}</div>
+                </div>
+              </li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
 
-            <h4></h4>
-            <ul class="list-group"></div>
+      <div class="row mt-4" >
+        <div class="col">
+          <h5 style="color: white;">{{ user.username }}</h5>
+          <ul class="list-group">
+            <li class="list-group-item">
+              <div class="row">
+                <div class="col" style="text-align: left; min-width: 125px; max-width: 150px;">Total Points:</div>
+                <div class="col" style="text-align: left;">{{ user.profile.points_total }}</div>
+                <div class="col">
+                  <div class="row">
+                    <div class="col" style="text-align: right;">Rank:</div> 
+                    <div class="col" style="text-align: center;">{{ user.profile.total_rank }}</div>
+                  </div>
+                </div>
+              </div>
+            </li>
+            <li class="list-group-item">
+              <div class="row">
+                <div class="col" style="text-align: left; min-width: 125px; max-width: 150px;">Cardio Points:</div>
+                <div class="col" style="text-align: left;">{{ user.profile.points_cardio }}</div>
+                <div class="col">
+                  <div class="row">
+                    <div class="col" style="text-align: right;">Rank:</div> 
+                    <div class="col" style="text-align: center;">{{ user.profile.cardio_rank }}</div>
+                  </div>
+                </div>
+              </div>
+            </li>
+            <li class="list-group-item">
+              <div class="row">
+                <div class="col" style="text-align: left; min-width: 125px; max-width: 150px;">Lifting Points:</div>
+                <div class="col" style="text-align: left;">{{ user.profile.points_weight }}</div>
+                <div class="col">
+                  <div class="row">
+                    <div class="col" style="text-align: right;">Rank:</div> 
+                    <div class="col" style="text-align: center;">{{ user.profile.weight_rank }}</div>
+                  </div>
+                </div>
+              </div>
+            </li>
+            <li class="list-group-item">
+              <div class="row">
+                <div class="col" style="text-align: left; min-width: 125px; max-width: 150px;">Calisthenics Points:</div>
+                <div class="col" style="text-align: left;">{{ user.profile.points_calis }}</div>
+                <div class="col">
+                  <div class="row">
+                    <div class="col" style="text-align: right;">Rank:</div> 
+                    <div class="col" style="text-align: center;">{{ user.profile.calis_rank }}</div>
+                  </div>
+                 </div>
+              </div>
+            </li>
+          </ul>
         </div>
+        <div class="col"></div>
+        <div class="col"></div>
       </div>
     </div>
   

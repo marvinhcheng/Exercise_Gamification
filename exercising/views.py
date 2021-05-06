@@ -6,7 +6,7 @@ from django.urls import reverse
 from django.views import generic
 import random
 from django.utils import timezone
-from .models import User, Exercise_Log, Profile, Goal_Log, Group, Message, exercises
+from .models import User, Profile, Exercise_Log, Goal_Log, Group, Message, exercises
 from .forms import ExerciseForm, GoalsForm, GroupForm, MessageForm, GroupAddForm, EditGroupForm
 from django.views.generic import TemplateView
 from django.views.generic.list import View
@@ -27,15 +27,29 @@ class LogsListView(generic.ListView):
     # #     return Profile.logs.objects.order_by('-logs.date')
     #     return Profile.logs.objects.all()
 
-def instantiate_points(request):
-    if request.user.profile.points_cardio == None:
-        request.user.profile.points_cardio = 0
-    if request.user.profile.points_weight == None:
-        request.user.profile.points_weight = 0
-    if request.user.profile.points_calis == None:
-        request.user.profile.points_calis = 0
-    if request.user.profile.points_total == None:
-        request.user.profile.points_total == 0
+def instantiate_points(current_user):
+    if current_user.profile.points_cardio == None:
+        current_user.profile.points_cardio = 0
+    if current_user.profile.points_weight == None:
+        current_user.profile.points_weight = 0
+    if current_user.profile.points_calis == None:
+        current_user.profile.points_calis = 0
+    if current_user.profile.points_total == None:
+        current_user.profile.points_total == 0
+
+class LeaderboardView(generic.ListView):
+    template_name = 'exercising/leaderboards.html'
+    context_object_name = 'top_points_total'
+
+    def get_queryset(self):
+        return Profile.objects.all().order_by('-points_total')[:10]
+
+    def get_context_data(self, **kwargs):
+        context = super(LeaderboardView, self).get_context_data(**kwargs)
+        context['top_points_cardio'] = Profile.objects.all().order_by('-points_cardio')[:10]
+        context['top_points_weight'] = Profile.objects.all().order_by('-points_weight')[:10]
+        context['top_points_calis'] = Profile.objects.all().order_by('-points_calis')[:10]
+        return context
 
 def calculate_points(request, exercise_type):
     #This code mad me want to punch a hole through my screen
@@ -91,39 +105,6 @@ def add_goal(request):
     else:
         form2 = GoalsForm()
     return render(request, 'exercising/goals.html', {'form': form2})
-
-
-def leaderboard_total(self):
-    instantiate_points()
-    # items = list(Profile.objects.filter(points_total != None).order_by('-points_total')[:10])
-    # while items.len() < 10:
-    #     items.append(None)
-    # return items
-    return Profile.objects.filter(points_total != None).order_by('-points_total')[:10]
-
-def leaderboard_cardio(self):
-    instantiate_points()
-    # items = list(Profile.objects.filter(points_total != None).order_by('-points_cardio')[:10])
-    # while lists.len() < 10:
-    #     items.append(None)
-    # return items
-    return Profile.objects.filter(points_total != None).order_by('-points_cardio')[:10]
-
-def leaderboard_weight(self):
-    instantiate_points()
-    # items = list(Profile.objects.filter(points_total != None).order_by('-points_weight')[:10])
-    # while items.len() < 10:
-    #     items.append(None)
-    # return items
-    return Profile.objects.filter(points_total != None).order_by('-points_weight')[:10]
-
-def leaderboard_calis(self):
-    # instantiate_points()
-    # items = list(Profile.objects.filter(points_total != None).order_by('-points_calis')[:10])
-    # while items.len() < 10:
-    #     items.append(None)
-    # return items
-    return Profile.objects.filter(points_total != None).order_by('-points_calis')[:10]
 
 def get_placements(request):
     instantiate_points()

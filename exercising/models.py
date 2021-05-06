@@ -5,6 +5,7 @@ from django import forms, template
 from django.contrib.auth.models import User
 from django.contrib.postgres.fields import ArrayField
 from django.dispatch import receiver
+from django.db.models import Count, Q
 from django.db.models.signals import post_save
 from django.db.models.query import EmptyQuerySet
 from django.conf import settings
@@ -42,23 +43,47 @@ exercises = (
 #     ("CHEST", "Chest"),
 # )
 
-class ProfileQuerySet(models.QuerySet):
-    def all(self):
-        return self.filter()[:10]
-
-
-
 class Profile(models.Model):
     profile = models.OneToOneField(User, related_name='profile', on_delete=models.CASCADE, primary_key=True)
     points_cardio = models.IntegerField(default=0, null=True)
     points_weight = models.IntegerField(default=0, null=True)
     points_calis = models.IntegerField( default=0, null=True)
     points_total = models.IntegerField(default=0, null=True)
-
-    leaderboard = ProfileQuerySet.as_manager()
     
     def __str__(self):
         return self.profile.username
+
+    def total_rank(self):
+        count = 0
+        for prof in Profile.objects.all().order_by('-points_total'):
+            count += 1
+            if self == prof:
+               return count
+        return -1
+
+    def cardio_rank(self):
+        count = 0
+        for prof in Profile.objects.all().order_by('-points_cardio'):
+            count += 1
+            if self == prof:
+               return count
+        return -1
+
+    def weight_rank(self):
+        count = 0
+        for prof in Profile.objects.all().order_by('-points_weight'):
+            count += 1
+            if self == prof:
+               return count
+        return -1
+
+    def calis_rank(self):
+        count = 0
+        for prof in Profile.objects.all().order_by('-points_calis'):
+            count += 1
+            if self == prof:
+               return count
+        return -1
 
 
 class Exercise_Log(models.Model):
@@ -70,6 +95,7 @@ class Exercise_Log(models.Model):
 
     def __str__(self):
         return str(self.date)
+
 
 class Goal_Log(models.Model):
     exercise_type = models.CharField(max_length=20, choices=exercises, default='Cardio')
@@ -142,3 +168,4 @@ class Message(models.Model):
 def create_user_profile(sender, instance, created, **kwargs):
     for user in User.objects.all():
         Profile.objects.get_or_create(profile=user)
+        instantiate_points(user)

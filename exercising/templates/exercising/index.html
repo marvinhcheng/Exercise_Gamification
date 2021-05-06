@@ -41,6 +41,9 @@
               <a class="nav-link" href="/goals/">Goals</a>
             </li>
             <li class="nav-item">
+              <a class="nav-link" href="/leaderboards/">Leaderboards</a>
+            </li>
+            <li class="nav-item">
               <a class="nav-link" href="/music/">Music</a>
             </li>
             <li class="nav-item">
@@ -97,7 +100,7 @@
             </button>
           </form>
           <ul class="list-group">
-            {% for item in user.profile.goals.all reversed%}
+            {% for item in user.profile.goals.all reversed %}
             <li class="list-group-item">
               <div class="container">
                 <div class="row">
