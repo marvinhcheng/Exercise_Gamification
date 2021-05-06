@@ -78,11 +78,12 @@ class Exercise_Log(models.Model):
     profile = models.ForeignKey(Profile, null=True, related_name='logs', on_delete=models.CASCADE)
 
     def get_points(self):
-        if(self.exercise_type[4] == 'R'):
+        print(self.exercise_type)
+        if(self.exercise_type == 'CARDIO'):
             return self.amount * 16
-        elif(self.exercise_type[4] == 'L'):
+        elif(self.exercise_type == 'CALISTHENICS'):
             return self.amount * 8
-        elif(self.exercise_type[4] == "I"):
+        elif(self.exercise_type == "WEIGHT_TRAINING"):
             return self.amount * 30
 
     def __str__(self):
