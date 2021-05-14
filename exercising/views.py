@@ -51,17 +51,17 @@ class LeaderboardView(generic.ListView):
         context['top_points_calis'] = Profile.objects.all().order_by('-points_calis')[:10]
         return context
 
-def calculate_points(request, exercise_type):
+def calculate_points(request, new_exercise):
     #This code mad me want to punch a hole through my screen
-        if exercise_type == 'CARDIO':
-            request.user.profile.points_cardio += new_exercise.amount*16
-            request.user.profile.points_total += new_exercise.amount*16
-        if exercise_type == 'WEIGHT_TRAINING':
-            request.user.profile.points_weight += new_exercise.amount*30
-            request.user.profile.points_total += new_exercise.amount*30
-        if exercise_type == 'CALISTHENICS':
-            request.user.profile.points_calis += new_exercise.amount*8
-            request.user.profile.points_total += new_exercise.amount*8
+    if new_exercise.exercise_type == 'CARDIO':
+        request.user.profile.points_cardio += new_exercise.amount*16
+        request.user.profile.points_total += new_exercise.amount*16
+    if new_exercise.exercise_type == 'WEIGHT_TRAINING':
+        request.user.profile.points_weight += new_exercise.amount*30
+        request.user.profile.points_total += new_exercise.amount*30
+    if new_exercise.exercise_type == 'CALISTHENICS':
+        request.user.profile.points_calis += new_exercise.amount*8
+        request.user.profile.points_total += new_exercise.amount*8
 
 def add_exercise(request):
     if request.method == 'POST':
@@ -74,8 +74,8 @@ def add_exercise(request):
             new_exercise.date = form.cleaned_data['date']
             new_exercise.profile = request.user.profile
             new_exercise.save()
-            instantiate_points()
-            calculate_points(new_exercise.exercise_type[0])
+            instantiate_points(request.user)
+            calculate_points(request, new_exercise)
             request.user.profile.logs.add(new_exercise)
             request.user.save()
             request.user.profile.save()
@@ -104,7 +104,7 @@ def add_goal(request):
     return render(request, 'exercising/goals.html', {'form': form2})
 
 def get_placements(request):
-    instantiate_points()
+    instantiate_points(request.user)
     placement = 0
     placements = []
     if points_type == "TOTAL":
